@@ -6,7 +6,7 @@ body {
 	padding: 0;
 	font-family: Helvetica, Arial, sans-serif;
 	color: #666;
-	background: #f2f2f8; 
+	background-color: #f2f2f8; 
 	font-size: 1em;
 	line-height: 1.5em;	
 }
@@ -27,7 +27,6 @@ p {
  */
 #titulo {
 	float: left;
-	padding: 5px 0 0 0;
 	color: white;
 	text-decoration: none;
 	width: 220px;
@@ -63,7 +62,7 @@ p {
  * Navegación
  */
 #cabecera {
-	background-color: #91b7b0;
+	background-color: #2A4C3B;
 	border: 0px;
 	border-radius: 0px;
 	box-shadow: 1px 2px 9px #888888;
@@ -86,16 +85,14 @@ p {
 Contenido
 */
 #formularios {
-	
-	/*width: 30%;
-	min-width: 600px;
-	max-width: 800px;*/
 	margin-top: 20px;
 	padding: 10px;
 	border-radius: 5px;
 	-webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.4);
 	-moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.4);
 	box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.4);
+	background-color: #fff;
+	border:1px solid;
 }
 
  /* MAPA*/
@@ -104,11 +101,11 @@ Contenido
 		width: 100%;
 		padding-top: 10px;
 		padding-right: 10px;
-		background-color: red;
+		padding-left: 10px;
 		margin: 0 auto;
 	}
 	#mapa {
-		height: 600px;
+		height: 580px;
 		border-radius: 4px;
 		float: right;
 		margin-bottom: 10px;
@@ -119,4 +116,28 @@ Contenido
 		width: 25px;
 		margin-right: 5px;
 		vertical-align: middle;
+	}
+	.controls {
+		margin-top: 10px;
+		border: 1px solid transparent;
+		border-radius: 2px 2px 2px 2px;
+		box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		height: 32px;
+		outline: none;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	}
+	#pac-input {
+		background-color: #fff;
+		font-family: Roboto;
+		font-size: 15px;
+		font-weight: 300;
+		margin-left: 12px;
+		padding: 0 11px 0 13px;
+		text-overflow: ellipsis;
+		width: 300px;
+	}
+
+	#dispos{
+		padding-left: 0px;
 	}

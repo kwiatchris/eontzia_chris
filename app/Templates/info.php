@@ -27,15 +27,16 @@
     				<!--<li><audio src="./Vista/audio.mp3" preload="auto" controls autoplay></audio></li>-->  					
       			</ul>
     		</div><!-- /.navbar-collapse -->
-  		</div><!-- /.container-fluid -->
+  		</div><!-- /.end container -->
 	</nav>
 
 	<main>
-		<div class="">
-			<h2><?php echo $mensaje ?></h2>
-			<p><a href="../">Ir a inicio</a></p>
-		</div>
-		
+		<div class="container">
+			<div class="alert alert-info" role="alert">				
+				<strong><h4> <?php echo $mensaje?></h4></strong>
+				<p><a href="http://eontzia.zubirimanteoweb.com/app">Ir a inicio</a></p>
+			</div>			
+		</div>		
 	</main>
 </body>
 </html>

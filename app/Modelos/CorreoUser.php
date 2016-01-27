@@ -1,8 +1,8 @@
  <?php
 	header('Content-Type: text/html; charset=ISO-8859-1');
-	//require_once 'class.phpmailer.php';
-	//include_once 'class.smtp.php';
-	//include_once 'keys.php';		
+	require_once 'class.phpmailer.php';
+	include_once 'class.smtp.php';
+	include_once 'keys.php';		
 	//require_once 'Utils.php';
 	
 	date_default_timezone_set('Etc/UTC');
@@ -25,7 +25,7 @@
 		}
 
 		public function enviarCorreoRegistro($idUsuario,$Nombre,$ape1,$correo,$key,$ape2=""){			
-			Utils::escribeLog("Inicio PHPMailer","debug");
+			//Utils::escribeLog("Inicio PHPMailer","debug");
 			$URL="http://eontzia.zubirimanteoweb.com/app/usuario/validar/".$correo."/".$key;			
 			//$URL="http://localhost/workspace/eontziApp/app/usuario/validar/".$correo."/".$key;
 			$Subject='Bienvenido a EontziApp';
@@ -38,7 +38,7 @@
 		}
 
 		public function enviarConfirmValidacion($Nombre,$ape1,$correo){			
-			Utils::escribeLog("Inicio PHPMailer confirmValidar","debug");
+			//Utils::escribeLog("Inicio PHPMailer confirmValidar","debug");
 			$URL="http://eontzia.zubirimanteoweb.com/app";
 			//$URL="http://localhost/workspace/eontziApp/app/";
 			$Subject = 'Validacion de usuario realizado correctamente';
@@ -80,10 +80,10 @@
 				$mail->send();
 
 			}catch(phpmailerException $me){
-				Utils::escribeLog("Error: ".$me->getMessage()." | Fichero: ".$me->getFile()." | Línea: ".$me->getLine()." [Error al enviar correo]","debug");
+				//Utils::escribeLog("Error: ".$me->getMessage()." | Fichero: ".$me->getFile()." | Línea: ".$me->getLine()." [Error al enviar correo]","debug");
 				return false;
 			}catch(Exception $e){
-				Utils::escribeLog("Error: ".$e->getMessage()." | Fichero: ".$e->getFile()." | Línea: ".$e->getLine()." [Error al enviar correo]","debug");
+				//Utils::escribeLog("Error: ".$e->getMessage()." | Fichero: ".$e->getFile()." | Línea: ".$e->getLine()." [Error al enviar correo]","debug");
 				return false;
 			}			
 			return true;

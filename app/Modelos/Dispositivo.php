@@ -46,11 +46,28 @@
 
 		}
 		
-public static function anadirDispositivo($tipo,$inputLatitude,$inputLongitude,$Id_usu){
+public static function anadirDispositivo($tipo,$inputLatitude,$inputLongitude,$usu){
+			$bd=Conexion::getInstance()->getDb();
+			$retVal=1;
+			try{
+				$sql="SELECT Cliente_Id	FROM Usuarios as usu JOIN Trabajadores as trab
+					ON usu.Trabajador_Id=trab.Trabajador_Id
+					WHERE usu.Usuario_Id=:usu";
+					$comando=$bd->prepare($sql);
+					$comando->execute(array(':usu' =>$usu ));
+
+			
+			}catch(PDOException $e){
+				Utils::escribeLog("Error: ".$e->getMessage()." | Fichero: ".$e->getFile()." | Línea: ".$e->getLine()." [Usuario o email existentes]","debug");
+				$retVal=0;
+			return $retVal;
+			}
+			$result=$comando->fetch(PDO::FETCH_ASSOC);
+			$idCli=$result['Cliente_Id'];
 			try{ 
 				$sql="INSERT INTO Dispositivos( Cliente_Id, Latitud, Longitud, Activo, Tipo) VALUES (:Cliente_Id,:Latitud,:Longitud,:Activo,:Tipo);";
-				$comando=Conexion::getInstance()->getDb()->prepare($sql);
-				$comando->execute(array(":Cliente_Id"=>$Id_usu,
+				$comando=$bd->prepare($sql);
+				$comando->execute(array(":Cliente_Id"=>$idCli,
 					":Latitud"=>$inputLatitude,
 					":Longitud"=>$inputLongitude,
 					":Activo"=>1,
@@ -69,7 +86,48 @@ public static function anadirDispositivo($tipo,$inputLatitude,$inputLongitude,$I
 			}
 			return $retVal;
 		}
+		/*public static function anadirTrabajador($Nombre,$inputApellido,$Telefono,$Email,$select,$usu){
+			$bd=Conexion::getInstance()->getDb();
+			$retVal=1;
+			try{
+				$sql="SELECT Cliente_Id	FROM Usuarios as usu JOIN Trabajadores as trab
+					ON usu.Trabajador_Id=trab.Trabajador_Id
+					WHERE usu.Usuario_Id=:usu";
+					$comando=$bd->prepare($sql);
+					$comando->execute(array(':usu' =>$usu ));
 
+			
+			}catch(PDOException $e){
+				Utils::escribeLog("Error: ".$e->getMessage()." | Fichero: ".$e->getFile()." | Línea: ".$e->getLine()." [Usuario o email existentes]","debug");
+				$retVal=0;
+			return $retVal;
+			}
+			$result=$comando->fetch(PDO::FETCH_ASSOC);
+			$idCli=$result['Cliente_Id'];
+			$key=Utils::random_string(50);
+			try{ 
+				$sql="INSERT INTO Trabajadores(Cliente_Id, Nombre, Apellido, Telefono, Email, Perfil_Id) VALUES (:Cliente_Id,:Nombre,:Apellido,:Telefono,:Email,:Selectperfil);";
+				$comando=$bd->prepare($sql);
+				$comando->execute(array(":Cliente_Id"=>$idCli,
+					":Nombre"=>$Nombre,
+					":Apellido"=>$inputApellido,
+					":Telefono"=>$Telefono,
+					":Email"=>$Email,
+					":Selectperfil"=>$select));
+			}catch(PDOException $e){
+				//Utils::escribeLog("Error: ".$e->getMessage()." | Fichero: ".$e->getFile()." | Línea: ".$e->getLine()." [Usuario o email existentes]","debug");
+				$retVal=0;
+			return $retVal;
+			}
+			$cuenta=$comando->rowCount();
+			if($cuenta==0)//Si no existe e la tabla de Dispositivos devuelve 0
+			{
+				//Utils::escribeLog("IdUsuario y/o correo  existentes en la BBDD -> KO","debug");
+				$retVal=0;
+				return $retVal;
+			}
+			return $retVal;
+		}*/
 
 	}
 ?>

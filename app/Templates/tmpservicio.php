@@ -10,8 +10,6 @@
 <meta http-equiv="Content-Type" content="text/html"; charset="utf-8"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0">
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js"></script> 
@@ -52,7 +50,12 @@
   		</div><!-- /.container-->
 	</nav>
 
-	
+	<?php if(isset($flash['message'])):?>
+				<div class="alert alert-info fade in" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<strong>Atenci&oacute;n!</strong> <?php echo $flash['message']?>
+				</div>
+			<?php endif; ?>
 	<!--Contenido-->
 	<div id="cont-fluid" class="container-fluid">
 		<div id="dispos" class="col-xs-12 col-md-12 col-lg-12">
@@ -72,7 +75,7 @@
 		  		  <form action="anadirDispositivo" method="post" id="anadirDispositivo">
 		        <div class="form-group" >
 		            <label  class="col-xs-2">TIPO</label>
-		            <select id="tiposelect"class="form-control">
+		            <select id="tiposelect" name="tiposelect" class="form-control">
 					<option value="1">Rechazo</option>
 					<option value="2">Plástico</option>
 					<option value="3">Papel</option>
@@ -97,7 +100,7 @@
 		        
 		        <button type="submit" class="btn btn-primary" >Añadir</button>
 		    </form>
-
+		    	
 		  </div>
 		  <!-- Zawartość zakładki 2 -->
 		  <div class="tab-pane" id="2zakladka">
@@ -128,7 +131,7 @@
 			        </div>
 			        <div class="input-group">
 			             <label  class="col-xs-2">Perfil</label>
-		            <select class="form-control" class="selectpicker">
+		            <select class="form-control" class="selectpicker" id="selectperfil" name="selectperfil">
 		            	<option value="2">Usuario</option>
 		            	<option value="0">Administrator</option>
 					 	<option id="encargado" name="encargado" value="1">Encargado</option>
@@ -146,19 +149,27 @@
 		  		  
 			       <div class="container">
 					  <h2>Lista de los Dispositivos</h2>
-					  <div class="list-group">
+					  <div id="list"class="list-group">
+					 	<a id="2" class="list-group-item"></a>
 					  <script>
 					  $.ajax({
 								type:"GET",
 								//url:"http://localhost:8080/eontziApp/app/getAllPos",	
 								//url:"http://eontzia.zubirimanteoweb.com/app/getAllPos",
-								url:"http://localhost/Aitor/classes/chris_residuos/eontzia_/new_eontzia/eontzia/app/getAllPos",
+								url:"http://localhost/Aitor/classes/chris_residuos/eontzia_/new_eontzia/eontzia/app/getAllPos/?id=1",
 								dataType:"JSON",
 								data:"",
+								
 								success:function(data){
-									console.log(data);
 									if(data.estado=="OK"){
-											
+										console.log(data);
+											$.each(data, function() {
+											  $.each(this, function(k, v) {
+											  	var a=document.getElementById("list");
+											  	$(a).append("<a id="+this['Dispositivo_Id']+" class='list-group-item'><h4 class='list-group-item-heading'>"+this['Dispositivo_Id']+"</h4><p class='list-group-item-text'>El volumen es:"+this['Volumen']+" </p></a>");
+											    
+											  });
+											});
 										   
 									}
 								},
@@ -174,7 +185,7 @@
 							});
 						
 						</script>
-					  	  </div>
+					  	  
 						</div>
 			        <div id="errorbox" style="color:red"></div>
 			       <!-- <input id="btn" type="submit" value="ENVIAR"/>         -->
@@ -247,9 +258,9 @@
  /* $('.list-group').click(function(){
   	$('#myModal').modal('show');  	 
   });*/
-  $(".list-group a").not('.emptyMessage').click(function() {
+  $(".list-group-item").not('.emptyMessage').click(function() {
        alert('Dispositivo con ID ' + this.id);
-       $('#inputLatitude').val(chris.text());
+      // $('#inputLatitude').val(chris.text());
        $('#myModal').modal('show');
 }); 
 
@@ -305,13 +316,15 @@
 }); 
 
 var reglasDispositivo={
-	inputLatitude:{required:true,digits:true},
-	inputLongitude:{required:true,digits:true},
-}
+	inputLatitude:{required:true,floatvalid:true},
+	inputLongitude:{required:true,floatvalid:true},
+};
 var mensajesDispositivo={
 	inputLatitude:{required:"Lotitude obligatoria",digits:"aceptados solo numeros"},
 	inputLongitude:{required:"Longitude obligatoria",digits:"aceptados solo numeros"},
-}
+};
+  jQuery.validator.addMethod('floatvalid', function(value) { return (value.match(/^\-?([0-9]+(\.[0-9]+)?|Infinity)$/)); }, 'Please enter a valid number');
+//jQuery.validator.addMethod('floaton', function(value){return (value.match(/^\-?([0-9]+(\.[0-9]+)?/));}'insertar numero corecto');
 $(document).ready(function(){
  		$("#anadirDispositivo").validate ({  
 		 rules:reglasDispositivo,  

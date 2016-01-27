@@ -213,7 +213,7 @@ include_once 'BD/Conexion.php';
 
 		//comprobar en bd		
 		try{
-			$sql="SELECT usu.Usuario_Id, trab.Nombre, trab.Apellido
+			$sql="SELECT usu.Usuario_Id, trab.Nombre, trab.Apellido, trab.Cliente_Id
 				  FROM Usuarios AS usu
 				  JOIN Trabajadores AS trab ON usu.Trabajador_Id = trab.Trabajador_Id
 				  WHERE usu.Nombre_Usuario LIKE  :id
@@ -239,6 +239,7 @@ include_once 'BD/Conexion.php';
 		$_SESSION['id_usuario']=$datos['Usuario_Id'];
 		$_SESSION['nombre']=$datos['Nombre'];
 		$_SESSION['apellido']=$datos['Apellido'];
+		$_SESSION['Client_Id']=$datos['Cliente_Id'];
 		return $retVal;
 				
 	}

@@ -38,10 +38,7 @@
 		$inputLatitude=$req->post("inputLatitude");
 		$inputLongitude=$req->post("inputLongitude");
 		$usu=$_SESSION['id_usuario'];
-		echo $inputLatitude;
-		echo $inputLatitude;
-		echo $tiposelect;
-		echo $usu;
+		
 		$result=Dispositivo::anadirDispositivo($tiposelect,$inputLatitude,$inputLongitude,$usu);
 		
 		//0->KO / 1->OK / 2->Existe el usuario / 3->registro OK correo KO
@@ -52,30 +49,67 @@
 		-usr_em_exist-->Usuario o email existentes
 		-usr_OK_em_F -->Usuario registrado, correo fallido
 		*/
-		if($result==0){
-			//Utils::escribeLog("KO","debug");
-			$mensaje= "err_reg_usr";
-			$app->redirect($app->urlfor('resultado',array('mensaje'=>$mensaje)));
-		}else if($result==1){
-			//Utils::escribeLog("OK","debug");
-			$mensaje="usr_reg_OK";
-			$app->redirect($app->urlfor('resultado',array('mensaje'=>$mensaje)));
-		}else if($result==2){
-			//Utils::escribeLog("Existe","debug");
-			$mensaje="usr_em_exist";
-			$app->redirect($app->urlfor('resultado',array('mensaje'=>$mensaje)));
-		}else{
-			//Utils::escribeLog("Existe","debug");
-			$mensaje="usr_OK_em_F";
-			$app->redirect($app->urlfor('resultado',array('mensaje'=>$mensaje)));
-		}
+		if($result==1){
+				$app->flash('message',"El dipsositivo insertado correctamente");
+				$app->redirect($app->urlfor('panel'));
+			}else if($result==0){
+				$app->flashNow('message',"No existe el dipsositivo");
+				$app->redirect($app->urlfor('panel'));
+			}else {
+				$app->flashNow('message',"El dipsositivo no est&aacute; validado, valida para poder acceder.");
+				$app->redirect($app->urlfor('panel'));
+			}
 		}
 	});
+	
 
+	//anadirTrabajador
+	$app->post('/anadirTrabajador',function() use ($app){
+		require_once 'Modelos/Trabajador.php';
+		//require_once 'Modelos/Utils.php';
+		//Utils::escribeLog("anadirTrabajador","debug");
+		if(!isset($_SESSION['id_usuario'])){
+			//render login
+			$app->redirect($app->urlfor('Inicio'));
+		}
+		else{
+		$req=$app->request();
+		$Nombre=$req->post('Nombre');
+		$inputApellido=$req->post("inputApellido");
+		$Telefono=$req->post("Telefono");
+		$Email=$req->post("Email");
+		$select=$req->post("selectperfil");
+		$client=$_SESSION['Client_Id'];
+		$key=Utils::random_string(50);
+
+		$result=Trabajador::nuevoTrabajador($Nombre,$inputApellido,$key,$client,$Email,$Telefono,$select);
+		
+		//0->KO / 1->OK / 2->Existe el usuario / 3->registro OK correo KO
+		/*Códigos de mensajes= 
+		
+		-err_reg_usr-->Error al registrar el usuario
+		-usr_reg_OK-->Usuario registrado correctamente.
+		-usr_em_exist-->Usuario o email existentes
+		-usr_OK_em_F -->Usuario registrado, correo fallido
+		*/
+		if($result==1){
+				$app->flash('message',"El Trabajador insertado correctamente");
+				$app->redirect($app->urlfor('panel'));
+			}else if($result==0){
+				$app->flashNow('message',"No existe el Trabajador");
+				$app->redirect($app->urlfor('panel'));
+			}else {
+				$app->flashNow('message',"El Trabajador no est&aacute; validado, valida para poder acceder.");
+				$app->redirect($app->urlfor('panel'));
+			}
+		}
+	});
 	//
 	$app->get('/panelcontrol',function() use ($app){
 		$app->render('tmpservicio.php');
-	});
+	})->name('panel');
+
+
 
 	//Registro
 	$app->post('/registro',function()use ($app){

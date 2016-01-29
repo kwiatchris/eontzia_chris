@@ -62,7 +62,56 @@
 		}
 	});
 	
+	//btnmodDispositivos
+	$app->post('/btnmodDispositivos',function() use($app){
+		require_once 'Modelos/Dispositivo.php';
+		if(!isset($_SESSION['id_usuario'])){
+			//render login
+			$app->redirect($app->urlfor('Inicio'));
+		}
+		else{
+			$req=$app->request();
+			$latitude=$req->post('inputLatitude');
+			$longitude=$req->post('inputLongitude');
+			$tipo=$req->post('Tipo');
+			$disid=$req->post('inputDisId');
+			$client=$_SESSION['Client_Id'];
+			
+			$result=Dispositivo::ModDispositivo($disid,$client,$latitude,$longitude,$tipo);
+			if($result==1){
+				$app->flash('message',"El dipsositivo modificado correctamente");
+				$app->redirect($app->urlfor('panel'));
+			}else if($result==0){
+				$app->flashNow('message',"No existe el dipsositivo");
+				$app->redirect($app->urlfor('panel'));
+			}else {
+				$app->flashNow('message',"El dipsositivo no est&aacute; validado, valida para poder acceder.");
+				$app->redirect($app->urlfor('panel'));
+			}
+		}
+	});
+	//modCliente
+	$app->post('/modCliente',function() use ($app){
+		require_once 'Modelos/Cliente.php';
+		if (!isset($_SESSION['id_usuario'])){
+			$app->redirect($app->urlFor('Inicio'));
+		}else{
+			$req=$app->request();
+			$nom_empr=$req->post('Nombre_empresa');
+			//$compra=$req->post('Comprado');
+			$coment=$req->post('Comentarios');
+			$nif=$req->post('NIF');
+			$nom=$req->post('nombre_contacto');
+			$apell=$req->post('Apellido');
+			$corr=$req->post('Correo');
+			$tel=$req->post('Telefono');
+			$client=$_SESSION['Client_Id'];
+			//echo $nom_empr." ".$compra." ".$coment." ".$nif." ".$nom." ".$apell." ".$corr." ".$tel;
 
+			$result=Cliente::modCliente($nom_empr,$coment,$nif,$nom,$apell,$corr,$tel,$client);
+
+		}
+	});
 	//anadirTrabajador
 	$app->post('/anadirTrabajador',function() use ($app){
 		require_once 'Modelos/Trabajador.php';
@@ -106,7 +155,12 @@
 	});
 	//
 	$app->get('/panelcontrol',function() use ($app){
-		$app->render('tmpservicio.php');
+		if(!isset($_SESSION['nombre'])&&!isset($_SESSION['apellido'])){
+			$app->redirect($app->urlFor('Inicio'));
+		}else{
+			$app->render('tmpservicio.php');
+		}
+		
 	})->name('panel');
 
 
@@ -296,6 +350,21 @@
 		}
 		echo json_encode($resp);
 	});
+
+	$app->get('/getCliente/:CliId',function($CliId) use ($app){
+		require_once 'Modelos/Cliente.php';
+		$resp=array();
+		$resultado=Cliente::getClientes($CliId);
+		if(!is_null($resultado)){
+			$resp['estado']='OK';
+			$resp['mensaje']=$resultado;
+		}else{
+			$resp['estado']='KO';
+			$resp['mensaje']='No hay Cliente con ID :'. $CliId;
+		}
+		echo json_encode($resp);
+	});
+
 
 	$app->get('/getAllPos/',function() use($app){
 		require_once 'Modelos/Dispositivo.php';

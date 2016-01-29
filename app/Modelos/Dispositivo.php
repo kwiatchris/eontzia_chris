@@ -13,7 +13,7 @@
 			
 			try{
 				//Obtener los datos de los dispositivos
-				$sql="SELECT dis.Dispositivo_Id,dis.Cliente_Id,dis.Latitud,dis.Longitud,dis.Barrio,dis.Tipo,L.Volumen,L.Fuego,L.Bateria,L.Fecha 
+				$sql="SELECT dis.Dispositivo_Id,dis.Cliente_Id,dis.Latitud,dis.Longitud,dis.Barrio,dis.Tipo,dis.Activo,L.Volumen,L.Fuego,L.Bateria,L.Fecha 
 					  FROM Dispositivos as dis, Dis_datos as L LEFT JOIN Dis_datos as R			  
 					  ON L.Dispositivo_Id=R.Dispositivo_Id AND L.Fecha<R.Fecha
 					  WHERE isnull(R.Dispositivo_Id)AND dis.Dispositivo_Id=L.Dispositivo_Id 
@@ -81,6 +81,32 @@ public static function anadirDispositivo($tipo,$inputLatitude,$inputLongitude,$u
 			if($cuenta==0)//Si no existe e la tabla de Dispositivos devuelve 0
 			{
 				//Utils::escribeLog("IdUsuario y/o correo  existentes en la BBDD -> KO","debug");
+				$retVal=0;
+				return $retVal;
+			}
+			return $retVal;
+		}
+		public static function ModDispositivo($dis,$cli,$latit,$longit,$tip){
+			$bd=Conexion::getInstance()->getDb();
+			$retVal=1;
+			try{
+				//$sql="UPDATE Trabajadores SET Activo='1' WHERE Trabajador_Id LIKE :id";
+		//	$comando=$db->prepare($sql);
+			//$comando->execute(array(':id'=>$TrabId));
+				//SET `Dispositivo_Id`=[value-1],`Cliente_Id`=[value-2],`Latitud`=[value-3],`Longitud`=[value-4],`Activo`=[value-5],`Barrio`=[value-6],`Tipo`=[value-7] 
+				$sql="UPDATE Dispositivos SET Latitud=:lat,Longitud=:long,Tipo=:tip WHERE Dispositivo_Id=:dis";
+				$comando=$bd->prepare($sql);
+				$comando->execute(array(":lat"=>$latit,
+										":long"=>$longit,
+										":tip"=>$tip,
+										":dis"=>$dis));
+			}catch(PDOException $e){
+				Utils::escribeLog("Error: ".$e->getMessage()." | Fichero: ".$e->getFile()." | Linea: ".$e->getLine()." []","debug");
+				$retVal=0;
+				return retVal;
+			}
+			if($comando->rowCount()==0){
+				Utils::escribeLog("Error al validar","debug");
 				$retVal=0;
 				return $retVal;
 			}

@@ -94,7 +94,16 @@ Contenido
 	background-color: #fff;
 	border:1px solid;
 }
+/*
+PANEL DE CONFIGURACION
+*/
 
+.tab-pane{
+	padding-top: 30px;
+}
+.label{
+	font:small;
+}
  /* MAPA*/
 	#cont-fluid {
 		height: 100%;

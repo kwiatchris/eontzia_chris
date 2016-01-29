@@ -73,6 +73,53 @@ class Cliente
 					
 		return $retVal;	//si todo va OK deveria devolver 1
 	}
+	public static function getClientes($cli){
+		$datosCliente=array();
+		$bd=Conexion::getInstance()->getDb();
+		try{
+			$sql="SELECT Cliente_Id, Nombre, Comprado, Fecha_creacion, Comentarios, NIF, Fecha_modif, Nombre_contacto, Apellido_contacto, Correo_contacto, Tel_contacto   FROM Clientes WHERE Cliente_Id=:id";
+			$comandocli=$bd->prepare($sql);
+			$comandocli->execute(array(":id"=>$cli));
+		}catch(PDOException $e){
+			Utils::escribeLog("Error: ".$e->getMessage()." | Fichero: ".$e->getFile()." | Línea: ".$e->getLine()." [Cliente  existentes]","debug");
+			$datosCliente['estado']=0;
+			$datosCliente['resultado']=$e->getMessage();
+			return $datosCliente;
+		}
+		$cuenta=$comandocli->rowCount();
+			if($cuenta==0)//si no ha afectado a ninguna línea...
+			{
+				$datosCliente['estado']=0;
+				$datosCliente['resultado']="No hay Cliente con el ID :".$cli;
+				return $datosCliente;			
+			}
+			
+			$datosCliente=$comandocli->fetchAll(PDO::FETCH_ASSOC);
+			return $datosCliente;
+		
+	}
+	public static function modCliente($nom_empresa,$coment,$nif,$nombre,$apellido,$correo,$telefono,$cliente){
+		$bd=Conexion::getInstance()->getDb();
+		try{
+			$sql="UPDATE Clientes SET Nombre=:nomempr,Comentarios=:com,NIF=:nif,Nombre_contacto=:nom,Apellido_contacto=:apell,Correo_contacto=:cor,Tel_contacto=:tel WHERE Cliente_Id=:cli";
+			$comando=$bd->prepare($sql);
+			$comando->execute(array(":nomempr"=>$nom_empresa,
+									":com"=>$coment,
+									":nif"=>$nif,
+									":nombre"=>$nombre,									
+									":apell"=>$apellido,
+									":cor"=>$correo,
+									":tel"=>$telefono,
+									":cli"=>$cliente
+									));
+		}catch(PDOException $e){
+			Utils::escribeLog("Error: ".$e->getMessage()." | Fichero: ".$e->getFile()." | Línea: ".$e->getLine()." [Usuario o email existentes]","debug");
+			$retVal=0;
+			return $retVal;
+
+		}
+
+	}
 }
 
 ?>

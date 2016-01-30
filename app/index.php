@@ -98,7 +98,7 @@
 		}else{
 			$req=$app->request();
 			$nom_empr=$req->post('Nombre_empresa');
-			//$compra=$req->post('Comprado');
+			$compra=$req->post('Comprado');
 			$coment=$req->post('Comentarios');
 			$nif=$req->post('NIF');
 			$nom=$req->post('nombre_contacto');
@@ -106,10 +106,18 @@
 			$corr=$req->post('Correo');
 			$tel=$req->post('Telefono');
 			$client=$_SESSION['Client_Id'];
-			//echo $nom_empr." ".$compra." ".$coment." ".$nif." ".$nom." ".$apell." ".$corr." ".$tel;
-
-			$result=Cliente::modCliente($nom_empr,$coment,$nif,$nom,$apell,$corr,$tel,$client);
-
+			
+			$result=Cliente::changeCliente($nom_empr,$coment,$nif,$nom,$apell,$corr,$tel,$client,$compra);
+				if($result==1){
+				$app->flash('message',"El Cliente modificado correctamente");
+				$app->redirect($app->urlfor('panel'));
+			}else if($result==0){
+				$app->flashNow('message',"No existe el Cliente");
+				$app->redirect($app->urlfor('panel'));
+			}else {
+				$app->flashNow('message',"El Cliente no est&aacute; validado, valida para poder acceder.");
+				$app->redirect($app->urlfor('panel'));
+			}
 		}
 	});
 	//anadirTrabajador
@@ -350,7 +358,7 @@
 		}
 		echo json_encode($resp);
 	});
-
+	//****Recogida de los datos del Cliente****//
 	$app->get('/getCliente/:CliId',function($CliId) use ($app){
 		require_once 'Modelos/Cliente.php';
 		$resp=array();

@@ -150,3 +150,7 @@ PANEL DE CONFIGURACION
 	#dispos{
 		padding-left: 0px;
 	}
+	#map-canvas {
+  width:500px;
+  height:480px;
+}

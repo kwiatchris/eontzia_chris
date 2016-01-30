@@ -59,14 +59,12 @@
 	<!--Contenido-->
 	<div id="cont-fluid" class="container-fluid">
 		<div id="dispos" class="col-xs-12 col-md-12 col-lg-12">
-			
-			<!-- Zakładki -->
+	<!-- Zakładki -->
 <ul class="nav nav-tabs" role="tablist" color="red">
   <li class="active"><a href="#1zakladka" role="tab" data-toggle="tab">Añadir Dispositivo</a></li>
   <li><a href="#2zakladka" role="tab" data-toggle="tab">Añadir Trabajador</a></li>
   <li><a href="#3zakladka" role="tab" data-toggle="tab">Modificar Dispositivo</a></li>
-  <li><a href="#4zakladka" role="tab" data-toggle="tab">Modificar Cliente</a></li>
-
+  <li><a id="4zakladka" href="#4zakladka" role="tab" data-toggle="tab">Modificar Cliente</a></li>
 </ul>
 <!-- Zawartość zakładek -->
 <div class="tab-content">
@@ -88,7 +86,33 @@
 		        </div>
 		        <div>
 		        <button  class="btn btn-default" id="buscarCoordenadas">Obtener Coordenadas</button>
+		        <a href="#myMapModal" class="btn" data-toggle="modal">Launch Map Modal</a>
 		        </div>
+		        <div class="modal fade" id="myMapModal">
+				    <div class="modal-dialog">
+				        <div class="modal-content">
+				            <div class="modal-header">
+				                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				                 <h4 class="modal-title">Modal title</h4>
+
+				            </div>
+				            <div class="modal-body">
+				                <div class="container">
+				                    <div class="row">
+				                        <div id="map-canvas" class=""></div>
+				                    </div>
+				                </div>
+				            </div>
+				            <div class="modal-footer">
+				                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				                <button type="button" class="btn btn-primary">Save changes</button>
+				            </div>
+				        </div>
+				        <!-- /.modal-content -->
+				    </div>
+				    <!-- /.modal-dialog -->
+				    </div>
+    <!-- /.modal -->
 		        <div class="form-group">
 		            <label for="inputLatitude" class="col-xs-2">Latitude</label>
 		            <input  class="form-control" id="inputLatitude" name="inputLatitude" placeholder="Latitude">
@@ -97,37 +121,27 @@
 		            <label for="inputLongitude" class="col-xs-2">Longitude</label>
 		            <input  class="form-control" id="inputLongitude" name="inputLongitude" placeholder="Longitude">
 		        </div>
-		        
 		        <button type="submit" class="btn btn-primary" >Añadir</button>
 		    </form>
-		    	
 		  </div>
 		  <!-- Zawartość zakładki 2 -->
 		  <div class="tab-pane col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6" id="2zakladka">
 		  		  <form  action="anadirTrabajador"  method="post" id="anadirTrabajador" >
 		  		  <div class="form-group">
-			      
 			            <label  class="col-xs-2">Nombre</label>
 			            <input type="text"  required="required" class="form-control" id="Nombre" name="Nombre" placeholder="Nombre">
-			     
-			       </div>
+			      </div>
 			       <div class="form-group">
-			       
 			            <label for="inputApellido" class="col-xs-2">Apellido</label>
 			            <input type="text"  required="required" class="form-control" id="inputApellido" name="inputApellido" placeholder="Apellido">
-			       
 			        </div>
 			        <div class="form-group">
-			   
 			            <label  class="col-xs-2">Telefono</label>
 			            <input type="text" class="form-control"  name="Telefono" placeholder="Telefono">
-			     
 			        </div>
 			        <div class="form-group">
-			       
 			            <label  class="col-xs-2">Email</label>
 			            <input type="text" class="form-control" id="inputEmail" name="Email" placeholder="Email">
-			     
 			        </div>
 			        <div class="form-group">
 			             <label  class="col-xs-2">Perfil</label>
@@ -136,8 +150,7 @@
 		            	<option value="0">Administrator</option>
 					 	<option id="encargado" name="encargado" value="1">Encargado</option>
 					</select>
-					 
-			        </div>
+					</div>
 			        <div id="errorbox" style="color:red"></div>
 			       <!-- <input id="btn" type="submit" value="ENVIAR"/>         -->
 			         <button id="btnTrabajador" type="submit" class="btn btn-primary">Añadir</button>
@@ -154,6 +167,7 @@
 					  <div id="list"class="list-group">
 					 	<a id="2" class="list-group-item"></a>
 					  <script>
+					  //AJAX PARA RECOGER EL DISPOSITIVO
 					  var myData= {};
 					  $.ajax({
 								type:"GET",
@@ -162,7 +176,6 @@
 								url:"http://localhost/Aitor/classes/chris_residuos/eontzia_/new_eontzia/eontzia/app/getAllPos/",
 								dataType:"JSON",
 								data:"",
-								
 								success:function(data){
 									if(data.estado=="OK"){
 										myData.data = data.mensaje;
@@ -174,21 +187,17 @@
 											  	$(a).append("<a id="+vv['Dispositivo_Id']+" class='list-group-item'><h4 class='list-group-item-heading'>ID de dispositivo :"+vv['Dispositivo_Id']+"<img src='http://eontzia.zubirimanteoweb.com/app/Templates/img/Container/tipo_"+vv['Tipo']+".png' >"+"</h4><p class='list-group-item-text'>El volumen es:"+vv['Volumen']+" </p></a>");
 											    
 											  //});
-											});
-										   
+											});  
 									}
 								},
 								beforeSend:function(){
-
 								},
 								complete:function(){
-
 								},
 								error:function(){
-
 								}
 							});
-						
+					//END OF AJAX DEL DISPOSITIVO
 						</script>
 					  	  </div>
 						</div>
@@ -197,7 +206,7 @@
 			         <!-- <button id="btnmodyficarDispositivos" type="submit" class="btn btn-primary">Modificar</button> -->
 			    </form>
 			    				<!-- Modal -->
-							<div id="myModal" class="modal fade" role="dialog">
+							<div id="myModalDispositivo" class="modal fade" role="dialog">
 							  <div class="modal-dialog">
 
 							    <!-- Modal content-->
@@ -250,56 +259,117 @@
 							</div>
 							<!--end of MODAL-->
 					</div>
-							 <!-- Zawartość zakładki 4 -->
-		  <div class="tab-pane col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6" id="4zakladka">
-		  		  <form  action="modCliente"  method="post" id="modCliente" >
-		  		  <div class="form-group">
-			            <label  class="col-xs-2">Nombre de la empresa</label>
-			            <input type="text"  required="required" class="form-control" id="Nombre_empresa" name="Nombre_empresa" placeholder="Nombre_empresa">
-			      </div>
-			       <div class="form-group">
-			            <label class="col-xs-2">Comprado</label>
-			            <select class="form-control selectpicker" id="Comprado" name="Comprado" placeholder="Comprado" readOnly="true">
-			            	<option value="0">NO</option>
-			            	<option value="1">SI</option>
-			            </select>
-			        </div>
-			        <div class="form-group">
-			            <label  class="col-xs-2">Comentarios</label>
-			            <input type="text" class="form-control"  name="Comentarios" placeholder="Comentarios">
-			        </div>
-			        <div class="form-group">
-					<label  class="col-xs-2">NIF</label>
-			            <input type="text" class="form-control" id="NIF" name="NIF" placeholder="NIF">
-			  		</div>
-			        <div class="form-group">
-			       		<label  class="col-xs-2">Nombre de contacto</label>
-			            <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" placeholder="Nombre de contacto">
-			     	</div>
-			        <div class="form-group">
-			            <label  class="col-xs-2">Apellido</label>
-			            <input type="text" class="form-control" id="Apellido" name="Apellido" placeholder="Apellido">
-			        </div>
-			        <div class="form-group">
-			       		<label  class="col-xs-2">Correo</label>
-			            <input type="text" class="form-control" id="Correo" name="Correo" placeholder="Correo">
-			     	</div>
-			        <div class="form-group">
-			       		<label  class="col-xs-2">Telefono</label>
-			            <input type="text" class="form-control" id="Telefono" name="Telefono" placeholder="Telefono">
-			     	</div>
-			        <div id="errorbox" style="color:red"></div>
-			          <button id="btnTrabajador" type="submit" class="btn btn-primary">Modificar</button>
-			    </form>
+					<!-- Modal -->
+							<div id="myModalCliente" class="modal fade" role="dialog">
+							  <div class="modal-dialog">
 
-		  </div>
- 		  </div>
- </div>	
+							    <!-- Modal content-->
+							    <form action="modCliente" id="btnmodDispositivos" method="post">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal">&times;</button>
+							        <h4 class="modal-title">Datos del Dispositivo</h4>
+							      </div>
+							      <div id="Clientebody" class="modal-body">
+							      		 <div class="form-group">
+						           			 <label  class="col-xs-2">Nombre de la empresa</label>
+						            		<input type="text"  required="required" class="form-control" id="Nombre_empresa" name="Nombre_empresa" placeholder="Nombre_empresa">
+								   	   </div>
+								       <div class="form-group">
+								            <label class="col-xs-2">Comprado</label>
+								            <select class="form-control selectpicker" id="Comprado" name="Comprado" placeholder="Comprado" >
+								            	<option value="0">NO</option>
+								            	<option value="1">SI</option>
+								            </select>
+								        </div>
+								        <div class="form-group">
+								            <label  class="col-xs-2">Comentarios</label>
+								            <input type="text" class="form-control"  id="Comentarios" name="Comentarios" placeholder="Comentarios">
+								        </div>
+								        <div class="form-group">
+										<label  class="col-xs-2">NIF</label>
+								            <input type="text" class="form-control" id="NIF" name="NIF" placeholder="NIF">
+								  		</div>
+								        <div class="form-group">
+								       		<label  class="col-xs-2">Nombre de contacto</label>
+								            <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" placeholder="Nombre de contacto">
+								     	</div>
+								        <div class="form-group">
+								            <label  class="col-xs-2">Apellido</label>
+								            <input type="text" class="form-control" id="Apellido" name="Apellido" placeholder="Apellido">
+								        </div>
+								        <div class="form-group">
+								       		<label  class="col-xs-2">Correo</label>
+								            <input type="text" class="form-control" id="Correo" name="Correo" placeholder="Correo">
+								     	</div>
+								        <div class="form-group">
+								       		<label  class="col-xs-2">Telefono</label>
+								            <input type="text" class="form-control" id="Telefono" name="Telefono" placeholder="Telefono">
+								     	</div>
+			        
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							        <button id="" type="submit" class="btn btn-primary">Modificar</button>
+							      </div>
+							    </div>
+							    </form>
+							  </div>
+							</div>
+					  </div>
+		 </div>	
+	</div>
 </div>
-</div>
-	
+<!-- snip COGER EL VARIABLE Y PASAR AL JS-->
+<div id="dom-target" style="display: none;">
+    <?php 
+        $output = $_SESSION['Client_Id']; //Again, do some operation, get the output.
+        echo htmlspecialchars($output); /* You have to escape because the result
+                                           will not be valid HTML otherwise. */
+    ?>
+</div>	
+<!---snip end-->
 </body>
+<script src="http://maps.googleapis.com/maps/api/js"></script>
 </html>
+<script>
+//  AJAX PARA RECOGER EL CLIENTE 
+    var div = document.getElementById("dom-target");
+    var ID = div.textContent;
+	  var myClient= {};
+					  $.ajax({
+								type:"GET",
+								//url:"http://localhost:8080/eontziApp/app/getAllPos",	
+								//url:"http://eontzia.zubirimanteoweb.com/app/getAllPos",
+								url:"http://localhost/Aitor/classes/chris_residuos/eontzia_/new_eontzia/eontzia/app/getCliente/"+ID,
+								dataType:"JSON",
+								data:"",
+								success:function(data){
+									//console.log(data);
+									if(data.estado=="OK"){
+										myClient.data=data.mensaje;
+										//console.log(myClient);
+										$('.modal-body #Nombre_empresa').val(data.mensaje['Nombre']);
+										//myData.data = data.mensaje;
+										//console.log(data.mensaje);
+											//$.each(data.mensaje, function(kk,vv) {
+											 //$.each(vv, function(k, v) {
+											  	//console.log(vv);
+											  	//var a=document.getElementById("list");
+											  	//$(a).append("<a id="+vv['Dispositivo_Id']+" class='list-group-item'><h4 class='list-group-item-heading'>ID de dispositivo :"+vv['Dispositivo_Id']+"<img src='http://eontzia.zubirimanteoweb.com/app/Templates/img/Container/tipo_"+vv['Tipo']+".png' >"+"</h4><p class='list-group-item-text'>El volumen es:"+vv['Volumen']+" </p></a>");
+												  //});
+											//});		  
+									}
+								},
+								beforeSend:function(){
+								},
+								complete:function(){
+								},
+								error:function(){
+								}
+							});
+//END OF AJAX RECOGER EL CLIENTE
+						</script>
 <script type="text/javascript">
  $("#buscarCoordenadas").click( function()
            {
@@ -312,13 +382,10 @@
   $('#encargado').click( function(){
         alert("selected");
   });
-  //show modal on click from list :)
- /* $('.list-group').click(function(){
-  	$('#myModal').modal('show');  	 
-  });*/
+  // FUNCIONAMIENTO DEL MODAL DE DISPOSITIVO
   $(".list-group a").not('.emptyMessage').click(function() {
        //alert('Dispositivo con ID ' + this.id);
-       console.log(myData);
+       //console.log(myData);
        
     for (var s in myData.data) {
     if (myData.data[s]["Dispositivo_Id"] == this.id){
@@ -328,18 +395,32 @@
    		$('.modal-body #inputLongitude').val(myData.data[s]['Longitud']);
    		$('.modal-body #Tipo').val(myData.data[s]['Tipo']);
    		$('.modal-body #inputDisId').val(myData.data[s]['Dispositivo_Id']);
-}
-}
+			}
+		}
+       //	$('.modal-body #inputLatitude').val(latitude);     
+       $('#myModalDispositivo').modal('show');
+	}); 
+  //END OF MODAL DEL DISPOSITIVO
+  //MODAL DEL CLIENTE
+  $("#4zakladka").click(function(){
+  	console.log(myClient);
+  	for (var s in myClient.data) {
+         console.log(myClient.data[s]);
+   		$('.modal-body #Nombre_empresa').val(myClient.data[0]['Nombre']);
+   		$('.modal-body #Comprado').val(myClient.data[0]['Comprado']);
+   		$('.modal-body #Comentarios').val(myClient.data[0]['Comentarios']);
+   		$('.modal-body #NIF').val(myClient.data[0]['NIF']);
+   		$('.modal-body #nombre_contacto').val(myClient.data[0]['Nombre_contacto']);
+   		$('.modal-body #Apellido').val(myClient.data[0]['Apellido_contacto']);
+   		$('.modal-body #Correo').val(myClient.data[0]['Correo_contacto']);
+   		$('.modal-body #Telefono').val(myClient.data[0]['Tel_contacto']);
+			}
+ 
+  		$('#myModalCliente').modal('show');
+  });
+  //END OF MODAL DEL CLIENTE
 
-      
-       //	$('.modal-body #inputLatitude').val(latitude);
-       
-       
-       $('#myModal').modal('show');
-}); 
- /* ("#btnmodyficarDispositivos").click(function(){
-
-  });*/
+//VALIDAR EL TRABAJADOR
  var reglas = {  
 	 Nombre: {required:true,minlength:3},  
 	 inputApellido:{required:true,minlength:3},
@@ -390,7 +471,8 @@
 	
 
 }); 
-
+//END OF VALIDAR DEL TRABAJADOR
+//VALIDAR EL DISPOSITIVO
 var reglasDispositivo={
 	inputLatitude:{required:true,floatvalid:true},
 	inputLongitude:{required:true,floatvalid:true},
@@ -434,5 +516,67 @@ $(document).ready(function(){
 
     });
 });
+//END OF VALIDAR EL DISPOSITIVO
+//MAPA EN EL MODAL
+var map;        
+var myCenter=new google.maps.LatLng(43.319275, -1.979313);
+var marker=new google.maps.Marker({
+    position:myCenter
+    //animation:google.maps.Animation.BOUNCE
 
+});
+function placeMarker(location) {
+  var marker = new google.maps.Marker({
+    position: location,
+    map: map,
+  });
+/*  var infowindow = new google.maps.InfoWindow({
+    content: 'Latitude: ' + location.lat() +
+    '<br>Longitude: ' + location.lng()
+  });
+  infowindow.open(map,marker);*/
+}
+function initialize() {
+  var mapProp = {
+      center:myCenter,
+      zoom: 14,
+      draggable: true,
+      scrollwheel: true,
+      mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+  
+  map=new google.maps.Map(document.getElementById("map-canvas"),mapProp);
+  marker.setMap(map);
+    
+  google.maps.event.addListener(marker, 'click', function() {
+      
+    infowindow.setContent(contentString);
+    infowindow.open(map, marker);
+    placeMarker(event.latLng);
+    
+  }); 
+};
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+google.maps.event.addDomListener(window, "resize", resizingMap());
+
+$('#myMapModal').on('show.bs.modal', function() {
+   //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
+   resizeMap();
+})
+
+function resizeMap() {
+   if(typeof map =="undefined") return;
+   setTimeout( function(){resizingMap();} , 400);
+}
+
+function resizingMap() {
+   if(typeof map =="undefined") return;
+   var center = map.getCenter();
+   google.maps.event.trigger(map, "resize");
+   map.setCenter(center); 
+}
+
+//END OF MAPA DEL MODAL
 </script>

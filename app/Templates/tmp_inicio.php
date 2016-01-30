@@ -58,9 +58,9 @@
 		        <thead>
 		            <tr>
 		                <th>TIPO</th>
-		                <th>VOLUMEN</th>
+		                <th>VOLUMEN %</th>
 		                <th>FUEGO</th>
-		                <th>BATERIA</th>
+		                <th>BATERIA %</th>
 		             </tr>
 		        </thead>
 		        <tbody>		        	

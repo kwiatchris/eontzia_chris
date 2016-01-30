@@ -98,15 +98,17 @@ class Cliente
 			return $datosCliente;
 		
 	}
-	public static function modCliente($nom_empresa,$coment,$nif,$nombre,$apellido,$correo,$telefono,$cliente){
+	public static function changeCliente($nom_empresa,$coment,$nif,$nombre,$apellido,$correo,$telefono,$cliente,$compra){
+		$retVal=1;
 		$bd=Conexion::getInstance()->getDb();
 		try{
-			$sql="UPDATE Clientes SET Nombre=:nomempr,Comentarios=:com,NIF=:nif,Nombre_contacto=:nom,Apellido_contacto=:apell,Correo_contacto=:cor,Tel_contacto=:tel WHERE Cliente_Id=:cli";
+			$sql="UPDATE Clientes SET Nombre=:nomempr,Comprado=:compra,Comentarios=:com,NIF=:nif,Nombre_contacto=:nom,Apellido_contacto=:apell,Correo_contacto=:cor,Tel_contacto=:tel WHERE Cliente_Id=:cli";
 			$comando=$bd->prepare($sql);
 			$comando->execute(array(":nomempr"=>$nom_empresa,
+									":compra"=>$compra,
 									":com"=>$coment,
 									":nif"=>$nif,
-									":nombre"=>$nombre,									
+									":nom"=>$nombre,									
 									":apell"=>$apellido,
 									":cor"=>$correo,
 									":tel"=>$telefono,
@@ -118,6 +120,12 @@ class Cliente
 			return $retVal;
 
 		}
+		if($comando->rowCount()==0){
+				Utils::escribeLog("Error al validar","debug");
+				$retVal=0;
+				return $retVal;
+			}
+			return $retVal;
 
 	}
 }

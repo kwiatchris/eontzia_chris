@@ -6,3 +6,26 @@
  * Webflow: Custom tests
  */
 Modernizr.addTest('ios', /(ipod|iphone|ipad)/i.test(navigator.userAgent));
+function Demo(){
+       console.log( "ready!" );
+         document.location.href = "http://localhost/Aitor/classes/chris_residuos/eontzia_/new_eontzia/eontzia/app/demo";
+        /*form = document.createElement('form');
+        form.setAttribute('method', 'POST');
+        form.setAttribute('action', 'http://localhost/Aitor/classes/chris_residuos/eontzia_/new_eontzia/eontzia/app/inicio');
+        myvar = document.createElement('input');
+        myvar.setAttribute('name', "$_SESSION['id_usuario']");
+        myvar.setAttribute('type', 'hidden');
+        myvar.setAttribute('value', '1');
+        form.appendChild(myvar);
+        document.body.appendChild(form);
+        form.submit();
+        console.log($_SESSION['id_usuario']);*/
+/*  $.ajax({
+    type: 'post',
+    url: 'http://localhost/Aitor/classes/chris_residuos/eontzia_/new_eontzia/eontzia/app/login',
+    data: "NomUsuario="prueba",pass="1"",
+    success: function(response) {
+       document.location.href = "http://localhost/Aitor/classes/chris_residuos/eontzia_/new_eontzia/eontzia/app/login";
+    }
+});*/
+}

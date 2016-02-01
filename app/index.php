@@ -314,12 +314,33 @@
 		else
 		{	
 			$id=$_SESSION['id_usuario'];
-			$json=file_get_contents('http://eontzia.zubirimanteoweb.com/app/getAllPos/?id='.$id);			
+			//$json=file_get_contents('http://eontzia.zubirimanteoweb.com/app/getAllPos/?id='.$id);
+			$json=file_get_contents('http://localhost/Aitor/classes/chris_residuos/eontzia_/new_eontzia/eontzia/app/getAllPos/?id='.$id);			
 			$array=json_decode($json,true);
 			$app->render('tmp_inicio.php',array('res'=>$array));
 		}		
-	})->name('PaginaInicio');
 	
+	})->name('PaginaInicio');
+		//ruta DEMO
+		$app->get('/demo',function() use($app){
+		
+			$_SESSION['id_usuario']=1;
+		if(!isset($_SESSION['id_usuario']))
+		{
+			//render login
+			$app->flash('message',"Debe iniciar sesión para acceder.");
+			$app->redirect($app->urlFor('Inicio'));
+		}
+		else
+		{	
+			$id=$_SESSION['id_usuario'];
+			//$json=file_get_contents('http://eontzia.zubirimanteoweb.com/app/getAllPos/?id='.$id);			
+			$json=file_get_contents('http://localhost/Aitor/classes/chris_residuos/eontzia_/new_eontzia/eontzia/app/getAllPos/?id='.$id);			
+			$array=json_decode($json,true);
+			$app->render('tmp_inicio.php',array('res'=>$array));
+		}		
+	
+	})->name('PaginaDemo');
 	//**********RUTAS API*************
 
 	//****Envio de datos//****
@@ -331,6 +352,8 @@
 			$resp['estado']='OK';
 			$resp['mensaje']='Lectura añadida correctamente.';
 			echo json_encode($resp);
+			//$app->flash('message',"FUEGO");
+			//$app->redirect($app->urlFor('Inicio'));
 		}else{
 			$resp['estado']='KO';
 			$resp['mensaje']='Error al añadir la lectura.';
@@ -385,6 +408,27 @@
 		//$idUsu='1';
 		$resp=array();
 		$resultado=Dispositivo::getAllDisp($idUsu);
+		if($resultado['estado']==1){
+			$resp['estado']='OK';
+			$resp['mensaje']=$resultado['resultado'];
+		}else{
+			$resp['estado']='KO';
+			$resp['mensaje']=$resultado['resultado'];
+		}
+		echo json_encode($resp);
+	});
+
+	$app->get('/getAllDispMod/',function() use($app){
+		require_once 'Modelos/Dispositivo.php';
+		if($app->request->get('id')==""){
+			$idUsu=$_SESSION['id_usuario'];
+		}else{
+			$idUsu=$app->request->get('id');
+		}
+		
+		//$idUsu='1';
+		$resp=array();
+		$resultado=Dispositivo::getAllDispMod($idUsu);
 		if($resultado['estado']==1){
 			$resp['estado']='OK';
 			$resp['mensaje']=$resultado['resultado'];

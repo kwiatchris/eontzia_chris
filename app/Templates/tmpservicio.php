@@ -2,11 +2,10 @@
 <html>
 <head>
 <script src="//fast.eager.io/_uPAxwoIB0.js"></script>
-	<link rel="stylesheet" type="text/css" href="Templates/css/estilos.css">
+	<link rel="stylesheet" type="text/css" href="./Templates/css/estilos.css">
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 	<link rel="icon" type="image/ico" href="../img/favicon.ico"/>
 	<link rel="shortcut icon" href="../img/favicon.ico"/>
-	<link rel="stylesheet" type="text/css" href="..\app\Templates\css\estilos.css">
 <meta http-equiv="Content-Type" content="text/html"; charset="utf-8"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0">
@@ -173,7 +172,7 @@
 								type:"GET",
 								//url:"http://localhost:8080/eontziApp/app/getAllPos",	
 								//url:"http://eontzia.zubirimanteoweb.com/app/getAllPos",
-								url:"http://localhost/Aitor/classes/chris_residuos/eontzia_/new_eontzia/eontzia/app/getAllPos/",
+								url:"http://localhost/Aitor/classes/chris_residuos/eontzia_/new_eontzia/eontzia/app/getAllDispMod/",
 								dataType:"JSON",
 								data:"",
 								success:function(data){
@@ -182,9 +181,9 @@
 										//console.log(data.mensaje);
 											$.each(data.mensaje, function(kk,vv) {
 											 //$.each(vv, function(k, v) {
-											  	//console.log(vv);
+											  	console.log(vv);
 											  	var a=document.getElementById("list");
-											  	$(a).append("<a id="+vv['Dispositivo_Id']+" class='list-group-item'><h4 class='list-group-item-heading'>ID de dispositivo :"+vv['Dispositivo_Id']+"<img src='http://eontzia.zubirimanteoweb.com/app/Templates/img/Container/tipo_"+vv['Tipo']+".png' >"+"</h4><p class='list-group-item-text'>El volumen es:"+vv['Volumen']+" </p></a>");
+											  	$(a).append("<a id="+vv['Dispositivo_Id']+" class='list-group-item'><h4 class='list-group-item-heading'>ID de dispositivo :"+vv['Dispositivo_Id']+"<img src='http://eontzia.zubirimanteoweb.com/app/Templates/img/Container/tipo_"+vv['Tipo']+".png' >"+"</h4><p class='list-group-item-text'> </p></a>");
 											    
 											  //});
 											});  

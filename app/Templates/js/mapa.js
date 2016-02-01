@@ -142,7 +142,8 @@ function getStreet(lat,lon,id,fecha,volumen,bateria,marcador){
 		$.ajax({
 			type:"GET",
 			//url:"http://localhost:8080/eontziApp/app/getAllPos",	
-			url:"http://eontzia.zubirimanteoweb.com/app/getAllPos",
+			//url:"http://eontzia.zubirimanteoweb.com/app/getAllPos",
+			url:"http://localhost/Aitor/classes/chris_residuos/eontzia_/new_eontzia/eontzia/app/getAllPos",
 			dataType:"JSON",
 			data:"",
 			success:function(data){

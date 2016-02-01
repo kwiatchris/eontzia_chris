@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 	<link rel="icon" type="image/ico" href="../img/favicon.ico"/>
 	<link rel="shortcut icon" href="../img/favicon.ico"/>
-	
+	<meta http-equiv="refresh" content="100"> 
 	<meta http-equiv="Content-Type" content="text/html"; charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0">
 	<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
@@ -34,7 +34,7 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">			
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['nombre']." ".$_SESSION['apellido'] ?><span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php if(isset($_SESSION['nombre']))echo $_SESSION['nombre']." ".$_SESSION['apellido'] ?><span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="#"><span class="showopacity glyphicon glyphicon-user"></span> Perfil</a></li>
 							<li><a href="panelcontrol"><span class="showopacity glyphicon glyphicon-wrench"></span> Configuracion</a></li>
@@ -45,7 +45,12 @@
 			</div><!-- /.navbar-collapse -->
   		</div><!-- /.container-->
 	</nav>
-	
+	<?php if(isset($flash['message'])):?>
+				<div class="alert alert-warning fade in" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<strong>Atenci&oacute;n!</strong> <?php echo $flash['message']?>
+				</div>
+	<?php endif; ?>
 	<!--Contenido-->
 	<div id="cont-fluid" class="container-fluid">
 		<div id="dispos" class="col-xs-12 col-md-3 col-lg-3">

@@ -87,6 +87,28 @@
 #divpadding{
    padding-top: 3cm;
 }
+#jum01{
+   padding-top: 2cm;
+   padding-bottom: 2cm;
+   background: #2A4C3B;
+   color: white;
+   
+}
+#jum02{
+   padding-top: 2cm;
+   padding-bottom: 2cm;
+   background: white;
+   color:  #2A4C3B;
+}
+#sec1{
+  background-color:  #2A4C3B;
+}
+.col-md-4 h1,h4{
+  line-height: 40px; 
+}
+input.form-control{ height: 40px; }
+label{ position: absolute; margin-left: 12px; margin-top: 2px; font-size: 9pt; opacity: .7; color: white;}
+
 
 
 

@@ -62,7 +62,7 @@
 <ul class="nav nav-tabs" role="tablist" color="red">
   <li class="active"><a href="#1zakladka" role="tab" data-toggle="tab">Añadir Dispositivo</a></li>
   <li><a href="#2zakladka" role="tab" data-toggle="tab">Añadir Trabajador</a></li>
-  <li><a href="#3zakladka" role="tab" data-toggle="tab">Modificar Dispositivo</a></li>
+  <li><a id="33zakladka" href="#3zakladka" role="tab" data-toggle="tab">Modificar Dispositivo</a></li>
   <li><a id="4zakladka" href="#4zakladka" role="tab" data-toggle="tab">Modificar Cliente</a></li>
 </ul>
 <!-- Zawartość zakładek -->
@@ -87,6 +87,7 @@
 		        <button  class="btn btn-default" id="buscarCoordenadas">Obtener Coordenadas</button>
 		        <a href="#myMapModal" class="btn" data-toggle="modal">Launch Map Modal</a>
 		        </div>
+		        <!--MODAL MAPA-->
 		        <div class="modal fade" id="myMapModal">
 				    <div class="modal-dialog">
 				        <div class="modal-content">
@@ -111,7 +112,7 @@
 				    </div>
 				    <!-- /.modal-dialog -->
 				    </div>
-    <!-- /.modal -->
+    <!-- /END modal MAPA -->
 		        <div class="form-group">
 		            <label for="inputLatitude" class="col-xs-2">Latitude</label>
 		            <input  class="form-control" id="inputLatitude" name="inputLatitude" placeholder="Latitude">
@@ -164,7 +165,7 @@
 			       <div class="container">
 					  <h2>Lista de los Dispositivos</h2>
 					  <div id="list"class="list-group">
-					 	<a id="2" class="list-group-item"></a>
+					 	<!--<a id="2" class="list-group-item"></a>-->
 					  <script>
 					  //AJAX PARA RECOGER EL DISPOSITIVO
 					  var myData= {};
@@ -197,8 +198,7 @@
 								}
 							});
 					//END OF AJAX DEL DISPOSITIVO
-						</script>
-					  	  </div>
+						</script>					  	  
 						</div>
 		        <div id="errorbox" style="color:red"></div>
 			       <!-- <input id="btn" type="submit" value="ENVIAR"/>         -->
@@ -368,7 +368,7 @@
 								}
 							});
 //END OF AJAX RECOGER EL CLIENTE
-						</script>
+</script>
 <script type="text/javascript">
  $("#buscarCoordenadas").click( function()
            {
@@ -382,11 +382,11 @@
         alert("selected");
   });
   // FUNCIONAMIENTO DEL MODAL DE DISPOSITIVO
-  $(".list-group a").not('.emptyMessage').click(function() {
+  $("#33zakladka").click(function(){
+  	$(".list-group a").click(function() {
        //alert('Dispositivo con ID ' + this.id);
        //console.log(myData);
-       
-    for (var s in myData.data) {
+        for (var s in myData.data) {
     if (myData.data[s]["Dispositivo_Id"] == this.id){
        console.log(myData.data[s]);
    		    //console.log(myData.data[s]['Latitud']);
@@ -399,6 +399,7 @@
        //	$('.modal-body #inputLatitude').val(latitude);     
        $('#myModalDispositivo').modal('show');
 	}); 
+});
   //END OF MODAL DEL DISPOSITIVO
   //MODAL DEL CLIENTE
   $("#4zakladka").click(function(){
@@ -425,8 +426,7 @@
 	 inputApellido:{required:true,minlength:3},
 	 Email:{required: true, email:true}, 
 	Telefono:{required:true,digits:true,minlength:9},
-
-	 
+ 
 	};  
 	var mensajes = {  
 	 Nombre: {required:"Nombre Requerido",minlength:"El nombre demasiado corto"}, 

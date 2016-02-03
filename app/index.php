@@ -341,6 +341,25 @@
 		}		
 	
 	})->name('PaginaDemo');
+
+		//ruta para mandar el correo desde el formulario 
+		$app->post('/contacto', function() use ($app){
+			
+			$req=$app->request();
+		
+			$nom=trim($req->post("nombre"));
+			$corr=trim($req->post("correo"));
+			$com=trim($req->post("commentario"));
+
+			$to      = 'residuoszubiri@gmail.com';
+			$subject = 'formulario del contacto';
+			$message =$com;
+			$headers = 'From: '.$nom . "\r\n" .
+			    'Reply-To: '.$corr . "\r\n" .
+			    'X-Mailer: PHP/' . phpversion();
+
+			mail($to, $subject, $message, $headers);
+		});
 	//**********RUTAS API*************
 
 	//****Envio de datos//****

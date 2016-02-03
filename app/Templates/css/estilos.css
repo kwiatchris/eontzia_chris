@@ -154,3 +154,23 @@ PANEL DE CONFIGURACION
   width:500px;
   height:480px;
 }
+/* 	infomracion jumbotron		*/
+	
+	#but {
+    background: #2A4C3B;
+    color: #fff;
+
+	}
+	#jum01{
+   	padding-top: 2cm;
+   	padding-bottom: 2cm;
+   	background: #2A4C3B;
+   	color: white;
+   
+	}
+	#jum02{
+  	 padding-top: 2cm;
+  	 padding-bottom: 2cm;
+  	 background: white;
+  	 color:  #2A4C3B;
+	}

@@ -46,7 +46,7 @@
     				<li  class="active" ><a style="background-color: #2A4C3B"href="index.html">Home</a></li> 
     				<li class="active"><a style="background-color: #2A4C3B"href="tienda_inicio.html">Información</a></li> 
             <li class="active"><a style="background-color: #2A4C3B"href="tienda_inicio.html#anadirTrabajador" >Registro</a></li> 
-    				<li class="active"><a style="background-color: #2A4C3B" href="#" onclick="Demo();" >Demo</a></li>
+    				<li class="active"><a style="background-color: #2A4C3B" href="app/demo" >Demo</a></li>
             <li class="active"><a style="background-color: #2A4C3B" href="app/logout">Login</a></li>
     			</ul>
 				</div><!-- /.navbar-collapse -->
@@ -238,7 +238,7 @@
                 <p>¿Estás interesado en las soluciones de <br>e-ontzia?</p>
                 <p>Contacta con Nosotros a aprendes cuando puedes ahorrar.</p>
                  <div class="text-center"><br>
-                <button id="but"  type="submit" class="btn btn-primary ">REGISTRAR</button> 
+                <a class="btn btn-default"  id="but" href="tienda_inicio.html#anadirTrabajador" role="button">REGISTRAR</a> 
                 </div>
               </div>
               
@@ -273,17 +273,13 @@
 </section>
 </body>
 <script type="text/javascript">
-  function Demo(){
-       console.log( "ready!" );
-         document.location.href = "http://localhost/Aitor/classes/chris_residuos/eontzia_/new_eontzia/eontzia/app/demo";
-    
-}
-$('input, textarea').on('change keyup paste', function(){
-   var $this=$(this);
-   if($this.val()){
-     if(!$this.hasClass('inputed')){
-       $this.addClass('inputed').animate({'padding-top': '10px'}).parent().find('label').slideToggle();
-     }
-   } else $this.removeClass('inputed').animate({'padding-top': '5px'}).parent().find('label').hide();
-});
+  
+// $('input, textarea').on('change keyup paste', function(){
+//    var $this=$(this);
+//    if($this.val()){
+//      if(!$this.hasClass('inputed')){
+//        $this.addClass('inputed').animate({'padding-top': '10px'}).parent().find('label').slideToggle();
+//      }
+//    } else $this.removeClass('inputed').animate({'padding-top': '5px'}).parent().find('label').hide();
+// });
 </script>

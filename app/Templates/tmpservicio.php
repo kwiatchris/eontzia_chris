@@ -182,7 +182,7 @@
 										//console.log(data.mensaje);
 											$.each(data.mensaje, function(kk,vv) {
 											 //$.each(vv, function(k, v) {
-											  	console.log(vv);
+											  	//console.log(vv);
 											  	var a=document.getElementById("list");
 											  	$(a).append("<a id="+vv['Dispositivo_Id']+" class='list-group-item'><h4 class='list-group-item-heading'>ID de dispositivo :"+vv['Dispositivo_Id']+"<img src='http://eontzia.zubirimanteoweb.com/app/Templates/img/Container/tipo_"+vv['Tipo']+".png' >"+"</h4><p class='list-group-item-text'> </p></a>");
 											    
@@ -209,7 +209,7 @@
 							  <div class="modal-dialog">
 
 							    <!-- Modal content-->
-							    <form action="btnmodDispositivos" id="btnmodDispositivos" method="post">
+							    <form  action="btnmodDispositivos" id="modDispositivos" method="post">
 							    <div class="modal-content">
 							      <div class="modal-header">
 							        <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -231,7 +231,7 @@
 								      <div class="form-group">
 								       
 								           <label  class="col-xs-2">Activo</label>
-								           <select class="form-control"  class="selectpicker" name="Activo" placeholder="Activo">
+								           <select class="form-control"  class="selectpicker" id="Activo" name="Activo" placeholder="Activo">
 								            <option value="0">NO</option>
 								            <option value="1">YES</option>
 								           </select>
@@ -250,7 +250,7 @@
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							        <button id="" type="submit" class="btn btn-primary">Modificar</button>
+							        <button  onclick="formHasChanged()" type="submit" class="btn btn-primary">Modificar</button>
 							      </div>
 							    </div>
 							    </form>
@@ -263,7 +263,7 @@
 							  <div class="modal-dialog">
 
 							    <!-- Modal content-->
-							    <form action="modCliente" id="btnmodDispositivos" method="post">
+							    <form action="modCliente" id="btnmodCliente" method="post">
 							    <div class="modal-content">
 							      <div class="modal-header">
 							        <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -332,6 +332,34 @@
 <script src="http://maps.googleapis.com/maps/api/js"></script>
 </html>
 <script>
+	function formHasChanged(){	
+		var modalinputDischange = new Array();
+		var somethingChanged =false;
+		modalinputDischange.push($('.modal-body #inputLatitude').val());
+		modalinputDischange.push($('.modal-body #inputLongitude').val());
+		modalinputDischange.push($('.modal-body #Tipo').val());
+		modalinputDischange.push($('.modal-body #Activo').val());
+		//console.log(modalinputDischange);
+		
+		if(modalinputDischange.toString()==modalinputDis.toString()){
+			//console.log("egual");	
+			somethingChanged=false; 
+			alert("No has modificado nada");
+			 
+		}else{
+			//console.log("not egual");  
+			somethingChanged=true;
+		}
+
+		if(somethingChanged==false){
+			$("#modDispositivos").submit(function(e){
+					e.preventDefault();
+			        return false;
+			    });
+
+		}else{ $("#modDispositivos").unbind('submit').submit();}
+	}
+		
 //  AJAX PARA RECOGER EL CLIENTE 
     var div = document.getElementById("dom-target");
     var ID = div.textContent;
@@ -370,6 +398,8 @@
 //END OF AJAX RECOGER EL CLIENTE
 </script>
 <script type="text/javascript">
+var modalinputDis = new Array();
+
  $("#buscarCoordenadas").click( function()
            {
              alert("Problem obteniendo coordenadas. Hay que añadirlas manualmente");
@@ -388,33 +418,40 @@
        //console.log(myData);
         for (var s in myData.data) {
     if (myData.data[s]["Dispositivo_Id"] == this.id){
-       console.log(myData.data[s]);
+       //console.log(myData.data[s]);
    		    //console.log(myData.data[s]['Latitud']);
    		$('.modal-body #inputLatitude').val(myData.data[s]['Latitud']);
    		$('.modal-body #inputLongitude').val(myData.data[s]['Longitud']);
    		$('.modal-body #Tipo').val(myData.data[s]['Tipo']);
    		$('.modal-body #inputDisId').val(myData.data[s]['Dispositivo_Id']);
+   		$('.modal-body #Activo').val(myData.data[s]['Activo']);
+   		modalinputDis.push($('.modal-body #inputLatitude').val(),$('.modal-body #inputLongitude').val(),$('.modal-body #Tipo').val(),$('.modal-body #inputDisId').val());
+   		//console.log(modalinputDis);
 			}
 		}
        //	$('.modal-body #inputLatitude').val(latitude);     
-       $('#myModalDispositivo').modal('show');
+       	$('#myModalDispositivo').modal('show');
+    //    	$("#myModalDispositivo").on('shown', function() {
+    //     $(this).find("#inputLatitude").focus();
+    // });	 
 	}); 
+	 
 });
   //END OF MODAL DEL DISPOSITIVO
   //MODAL DEL CLIENTE
   $("#4zakladka").click(function(){
   	console.log(myClient);
-  	for (var s in myClient.data) {
-         console.log(myClient.data[s]);
-   		$('.modal-body #Nombre_empresa').val(myClient.data[0]['Nombre']);
-   		$('.modal-body #Comprado').val(myClient.data[0]['Comprado']);
-   		$('.modal-body #Comentarios').val(myClient.data[0]['Comentarios']);
-   		$('.modal-body #NIF').val(myClient.data[0]['NIF']);
-   		$('.modal-body #nombre_contacto').val(myClient.data[0]['Nombre_contacto']);
-   		$('.modal-body #Apellido').val(myClient.data[0]['Apellido_contacto']);
-   		$('.modal-body #Correo').val(myClient.data[0]['Correo_contacto']);
-   		$('.modal-body #Telefono').val(myClient.data[0]['Tel_contacto']);
-			}
+  	// for (var s in myClient.data) {
+   //       console.log(myClient.data[s]);
+   // 		$('.modal-body #Nombre_empresa').val(myClient.data[0]['Nombre']);
+   // 		$('.modal-body #Comprado').val(myClient.data[0]['Comprado']);
+   // 		$('.modal-body #Comentarios').val(myClient.data[0]['Comentarios']);
+   // 		$('.modal-body #NIF').val(myClient.data[0]['NIF']);
+   // 		$('.modal-body #nombre_contacto').val(myClient.data[0]['Nombre_contacto']);
+   // 		$('.modal-body #Apellido').val(myClient.data[0]['Apellido_contacto']);
+   // 		$('.modal-body #Correo').val(myClient.data[0]['Correo_contacto']);
+   // 		$('.modal-body #Telefono').val(myClient.data[0]['Tel_contacto']);
+			// }
  
   		$('#myModalCliente').modal('show');
   });

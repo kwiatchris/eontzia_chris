@@ -69,6 +69,30 @@ class Trabajador
 		 }
 		 return $retVal;
 	}
+	public static function getAllTrabMod($id){
+		$trabajadores=array();
+		$bd=Conexion::getInstance()->getDb();
+		try{
+			$sql="SELECT Trabajador_Id, Cliente_Id, Nombre, Apellido, Telefono, Email, Activo, Fecha_creacion, Perfil_Id FROM Trabajadores WHERE Cliente_Id=:id";
+			$comando=$bd->prepare($sql);
+			$comando->execute(array(":id"=>$id));
+		}catch(PDOException $e){
+			$trabajadores['estado']=0;
+			$trabajadores['resultado']=$e->getMessage();
+			return $trabajadores;
+		}
+		$cuenta=$comando->rowCount();
+		if($cuenta==0){
+			$trabajadores['estado']=0;
+			$trabajadores['resultado']="No hay trabajadores disponibles";
+			return $trabajadores;
+		}
+
+		$trabajadores['estado']=1;
+		$trabajadores['resultado']=$comando->fetchAll(PDO::FETCH_ASSOC);
+		return $trabajadores;
+
+	}
 	/*public static function nuevoTrabajador($nombre,$apellido,$key,$idCliente,$email,$telefono=null,$perfil=null){
 		$retVal=1;
 		$bd=Conexion::getInstance()->getDb();

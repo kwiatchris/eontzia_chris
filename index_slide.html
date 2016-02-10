@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="app/Templates/css/estilos.css">
 	<link rel="stylesheet" type="text/css" href="css/estilos-new.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-  <link rel="icon" type="image/ico" href="../img/favicon.ico"/>
+	<link rel="icon" type="image/ico" href="../img/favicon.ico"/>
 	<link rel="shortcut icon" href="../img/favicon.ico"/>
 	
 	<meta http-equiv="Content-Type" content="text/html"; charset="utf-8"/>
@@ -22,11 +22,10 @@
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.js"></script> 
 
 <script src="js/bootstrapValidator.min.js"></script>
-
 </head>
 <body>
  <!--Cabecera-->
-	<nav id="cabecera" class="navbar navbar-default ">
+	<nav id="cabecera" class="navbar navbar-default  navbar-fixed-top">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">	
@@ -53,34 +52,47 @@
 				</div><!-- /.navbar-collapse -->
   		</div><!-- /.container-->
 	</nav>
-<div class="row">
- <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-    <li data-target="#myCarousel" data-slide-to="3"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
   </ol>
  
   <!-- Wrapper for slides -->
-  <div class="carousel-inner" role="listbox">
-    <div class="item active">
-      <img src="images/eontziamapaprueba.png" alt="Chania">
+  <div class="carousel-inner">
+    <div class="item active responsive">
+      <img src="images/eontziamapaprueba.png" alt="..." >
+      <div class="carousel-caption">
+          <h3>
+            <button id="but" type="button" onclick="Demo();"class="btn-primary btn-lg" >DEMO</button><p>Aqui podeis probar nuestra aplication</p></h3>
+      </div>
     </div>
-     <div class="item">
-        <img src="images/resizedimage600504-FullBox.jpg" alt="Chania" width="460" height="345">
-    </div>    
+    <div class="item responsive">
+      <img src="images/resizedimage600504-FullBox.jpg" alt="...">
+      <div class="carousel-caption">
+           <h3>
+            <a id="but" href="#sec2" class="btn-primary btn-lg">MAS INFORMACÍON</a></h3>
+      </div>
+    </div>
+    <div class="item responsive">
+      <img src="images/enevogarbage02.png" alt="...">
+      <div class="carousel-caption">
+          <h3>Caption Text</h3>
+      </div>
+    </div>
   </div>
-   <!-- Controls -->
-  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+ 
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
     <span class="glyphicon glyphicon-chevron-left"></span>
   </a>
-  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
     <span class="glyphicon glyphicon-chevron-right"></span>
   </a>
 </div> <!-- Carousel -->
-</div>
  <div class="container marketing">
 
       <!-- Three columns of text below the carousel -->

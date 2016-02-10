@@ -344,9 +344,7 @@
 
 		//ruta para mandar el correo desde el formulario 
 		$app->post('/contacto', function() use ($app){
-			ini_set("SMTP","aspmx.l.google.com");
-			ini_set("sendmail_from","residuoszubiri@gmail.com");
-
+			
 			$req=$app->request();
 		
 			$nom=trim($req->post("nombre"));
@@ -451,6 +449,26 @@
 		$resp=array();
 		$resultado=Dispositivo::getAllDispMod($idUsu);
 		if($resultado['estado']==1){
+			$resp['estado']='OK';
+			$resp['mensaje']=$resultado['resultado'];
+		}else{
+			$resp['estado']='KO';
+			$resp['mensaje']=$resultado['resultado'];
+		}
+		echo json_encode($resp);
+	});
+
+	$app->get('/getAllTrabMod', function() use ($app){
+		require_once 'Modelos/Trabajador.php';
+		if($app->request->get('id')==""){
+			$idUsu=$_SESSION['id_usuario'];
+		}else{
+			$idUsu=$app->request->get('id');
+		}
+
+		$resp=array();
+		$resultado=Trabajador::getAllTrabMod($idUsu);
+		if($resultado['estado']='OK'){
 			$resp['estado']='OK';
 			$resp['mensaje']=$resultado['resultado'];
 		}else{

@@ -60,10 +60,11 @@
 		<div id="dispos" class="col-xs-12 col-md-12 col-lg-12">
 	<!-- Zakładki -->
 <ul class="nav nav-tabs" role="tablist" color="red">
-  <li class="active"><a href="#1zakladka" role="tab" data-toggle="tab">Añadir Dispositivo</a></li>
-  <li><a href="#2zakladka" role="tab" data-toggle="tab">Añadir Trabajador</a></li>
-  <li><a id="33zakladka" href="#3zakladka" role="tab" data-toggle="tab">Modificar Dispositivo</a></li>
-  <li><a id="4zakladka" href="#4zakladka" role="tab" data-toggle="tab">Modificar Cliente</a></li>
+  <li class="active "><a id="glyph" class="glyphicon glyphicon-plus" href="#1zakladka" role="tab" data-toggle="tab"> Añadir Dispositivo</a></li>
+  <li><a class="glyphicon glyphicon-edit" id="33zakladka" href="#3zakladka" role="tab" data-toggle="tab"> Modificar Dispositivo</a></li>
+  <li><a class="glyphicon glyphicon-plus "aria-hidden="true" href="#2zakladka" role="tab" data-toggle="tab"> Añadir Trabajador</a></li>
+    <li><a class="glyphicon glyphicon-edit "aria-hidden="true" href="#5zakladka" role="tab" data-toggle="tab"> Modificar Trabajador</a></li>
+  <li><a class="glyphicon glyphicon-edit "id="4zakladka" href="#4zakladka" role="tab" data-toggle="tab"> Modificar Cliente</a></li>
 </ul>
 <!-- Zawartość zakładek -->
 <div class="tab-content">
@@ -157,6 +158,104 @@
 			    </form>
 
 		  </div>
+		  <!--zawartos zakladnki 5-->
+		  <div class="tab-pane col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6" id="5zakladka">
+		  	<div class="container">
+					  <h2>Lista de los trabajadores</h2>
+					  <div id="trablist"class="list-group">
+					  		 <script>
+					  //AJAX PARA RECOGER EL DISPOSITIVO
+					  var myData= {};
+					  $.ajax({
+								type:"GET",
+								//url:"http://localhost:8080/eontziApp/app/getAllPos",	
+								//url:"http://eontzia.zubirimanteoweb.com/app/getAllPos",
+								url:"http://localhost/Aitor/classes/chris_residuos/eontzia_/new_eontzia/eontzia/app/getAllTrabMod",
+								dataType:"JSON",
+								data:"",
+								success:function(data){
+									if(data.estado=="OK"){
+										myData.data = data.mensaje;
+										console.log(data.mensaje);
+											$.each(data.mensaje, function(kk,vv) {
+											 //$.each(vv, function(k, v) {
+											  	console.log(vv);
+											  	var a=document.getElementById("trablist");
+											  	$(a).append("<a id="+vv['Trabajador_Id']+" class='list-group-item'><h4 class='list-group-item-heading'>ID de trbajador :"+vv['Trabajador_Id']+</h4><p class='list-group-item-text'> </p></a>");
+											    
+											  //});
+											});  
+									}
+								},
+								beforeSend:function(){
+								},
+								complete:function(){
+								},
+								error:function(){
+								}
+							});
+					//END OF AJAX DEL DISPOSITIVO
+						</script>	
+					  </div>
+
+				</div>
+		  	</div>	  
+		    <!-- Zawartość zakładki 5 
+		  <div class="tab-pane col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6" id="5zakladka">
+		  		  <div>
+		        
+		        <a href="#contrasenaModal" class="btn btn btn-default glyphicon glyphicon-lock" data-toggle="modal"> Cambiar la contrasena</a>
+		        </div>
+		  		  <form  action="modificarTrabajador"  method="post" id="anadirTrabajador" >
+		  		  <div class="form-group">
+			            <label  class="col-xs-2">Nombre</label>
+			            <input type="text"  required="required" class="form-control" id="TrabNombre" name="TrabNombre" placeholder="Nombre">
+			      </div>
+			       <div class="form-group">
+			            <label for="inputApellido" class="col-xs-2">Apellido</label>
+			            <input type="text"  required="required" class="form-control" id="TrabApellido" name="TrabApellido" placeholder="Apellido">
+			        </div>
+			        <div class="form-group">
+			            <label  class="col-xs-2">Telefono</label>
+			            <input type="text" class="form-control"  id="TrabTelefono" name="TrabTelefono" placeholder="Contasena">
+			        </div>
+			        <div class="form-group">
+			            <label  class="col-xs-2">Email</label>
+			            <input type="text" class="form-control" id="TrabEmail" name="TrabEmail" placeholder="Email">
+			        </div>
+			       
+			        <div id="errorbox" style="color:red"></div>
+			        <input id="btn" type="submit" value="ENVIAR"/>         
+			         <button id="btnTrabajador" type="submit" class="btn btn-primary">Modificar</button>
+			    </form>
+
+		  </div>-->
+		   <!--MODAL CONTRASENA-->
+		        <div class="modal fade" id="contrasenaModal">
+				    <div class="modal-dialog">
+				        <div class="modal-content">
+				            <div class="modal-header">
+				                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				                 <h4 class="modal-title">CAMBIAR LA CONTRASENA</h4>
+
+				            </div>
+				            <div class="modal-body">
+				                <div class="container">
+				                    <div class="row">
+				                        <div id="map-canvas" class=""></div>
+				                    </div>
+				                </div>
+				            </div>
+				            <div class="modal-footer">
+				                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				                <button type="button" class="btn btn-primary">Save changes</button>
+				            </div>
+				        </div>
+				        <!-- /.modal-content -->
+				    </div>
+				    <!-- /.modal-dialog -->
+				    </div>
+    <!-- /END modal CONTRASENA -->
 		   <!-- Zawartość zakładki 3 -->
 		  <div class="tab-pane" id="3zakladka">
 		  
@@ -270,7 +369,7 @@
 							        <h4 class="modal-title">Datos del Dispositivo</h4>
 							      </div>
 							      <div id="Clientebody" class="modal-body">
-							      		 <div class="form-group">
+							      		<div class="form-group">
 						           			 <label  class="col-xs-2">Nombre de la empresa</label>
 						            		<input type="text"  required="required" class="form-control" id="Nombre_empresa" name="Nombre_empresa" placeholder="Nombre_empresa">
 								   	   </div>
@@ -509,6 +608,32 @@ var modalinputDis = new Array();
 }); 
 //END OF VALIDAR DEL TRABAJADOR
 //VALIDAR EL DISPOSITIVO
+//zakladka 5
+  $("#5zakladka").click(function(){
+  	$(".list-group a").click(function() {
+       //alert('Dispositivo con ID ' + this.id);
+       //console.log(myData);
+        for (var s in myData.data) {
+    if (myData.data[s]["Dispositivo_Id"] == this.id){
+       //console.log(myData.data[s]);
+   		    //console.log(myData.data[s]['Latitud']);
+   		$('.modal-body #inputLatitude').val(myData.data[s]['Latitud']);
+   		$('.modal-body #inputLongitude').val(myData.data[s]['Longitud']);
+   		$('.modal-body #Tipo').val(myData.data[s]['Tipo']);
+   		$('.modal-body #inputDisId').val(myData.data[s]['Dispositivo_Id']);
+   		$('.modal-body #Activo').val(myData.data[s]['Activo']);
+   		modalinputDis.push($('.modal-body #inputLatitude').val(),$('.modal-body #inputLongitude').val(),$('.modal-body #Tipo').val(),$('.modal-body #inputDisId').val());
+   		//console.log(modalinputDis);
+			}
+		}
+       //	$('.modal-body #inputLatitude').val(latitude);     
+       	$('#contrasenaModal').modal('show');
+    //    	$("#myModalDispositivo").on('shown', function() {
+    //     $(this).find("#inputLatitude").focus();
+    // });	 
+	}); 
+	 
+});
 var reglasDispositivo={
 	inputLatitude:{required:true,floatvalid:true},
 	inputLongitude:{required:true,floatvalid:true},

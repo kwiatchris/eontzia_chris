@@ -159,13 +159,14 @@
 
 		  </div>
 		  <!--zawartos zakladnki 5-->
-		  <div class="tab-pane col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6" id="5zakladka">
+		  <div class="tab-pane " id="5zakladka">
+		  	
 		  	<div class="container">
 					  <h2>Lista de los trabajadores</h2>
 					  <div id="trablist"class="list-group">
 					  		 <script>
 					  //AJAX PARA RECOGER EL DISPOSITIVO
-					  var myData= {};
+					  var myTrabajador= {};
 					  $.ajax({
 								type:"GET",
 								//url:"http://localhost:8080/eontziApp/app/getAllPos",	
@@ -175,13 +176,14 @@
 								data:"",
 								success:function(data){
 									if(data.estado=="OK"){
-										myData.data = data.mensaje;
+										myTrabajador.data = data.mensaje;
 										console.log(data.mensaje);
-											$.each(data.mensaje, function(kk,vv) {
+											$.each(data.mensaje, function(kk,trab) {
 											 //$.each(vv, function(k, v) {
-											  	console.log(vv);
+											  	//console.log(vv);
 											  	var a=document.getElementById("trablist");
-											  	$(a).append("<a id="+vv['Trabajador_Id']+" class='list-group-item'><h4 class='list-group-item-heading'>ID de trbajador :"+vv['Trabajador_Id']+</h4><p class='list-group-item-text'> </p></a>");
+											  	$(a).append("<a id="+trab['Trabajador_Id']+" class='list-group-item'><h4 class='list-group-item-heading'>ID de trbajador :"+
+											  		trab['Trabajador_Id']+"<br>Nombre :"+trab['Nombre']+"<br> Apellido : "+trab['Apellido']+ "<br> Telefono :"+trab['Telefono']+"</h4><p class='list-group-item-text'> </p></a>");
 											    
 											  //});
 											});  
@@ -198,40 +200,54 @@
 						</script>	
 					  </div>
 
-				</div>
-		  	</div>	  
-		    <!-- Zawartość zakładki 5 
-		  <div class="tab-pane col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6" id="5zakladka">
-		  		  <div>
-		        
-		        <a href="#contrasenaModal" class="btn btn btn-default glyphicon glyphicon-lock" data-toggle="modal"> Cambiar la contrasena</a>
-		        </div>
-		  		  <form  action="modificarTrabajador"  method="post" id="anadirTrabajador" >
-		  		  <div class="form-group">
-			            <label  class="col-xs-2">Nombre</label>
-			            <input type="text"  required="required" class="form-control" id="TrabNombre" name="TrabNombre" placeholder="Nombre">
-			      </div>
-			       <div class="form-group">
-			            <label for="inputApellido" class="col-xs-2">Apellido</label>
-			            <input type="text"  required="required" class="form-control" id="TrabApellido" name="TrabApellido" placeholder="Apellido">
-			        </div>
-			        <div class="form-group">
-			            <label  class="col-xs-2">Telefono</label>
-			            <input type="text" class="form-control"  id="TrabTelefono" name="TrabTelefono" placeholder="Contasena">
-			        </div>
-			        <div class="form-group">
-			            <label  class="col-xs-2">Email</label>
-			            <input type="text" class="form-control" id="TrabEmail" name="TrabEmail" placeholder="Email">
-			        </div>
-			       
-			        <div id="errorbox" style="color:red"></div>
-			        <input id="btn" type="submit" value="ENVIAR"/>         
-			         <button id="btnTrabajador" type="submit" class="btn btn-primary">Modificar</button>
-			    </form>
+				
+		  	</div>
+		  		<!-- Modal -->
+							<div id="myModalTrabajadores" class="modal fade" role="dialog">
+							  <div class="modal-dialog">
 
-		  </div>-->
-		   <!--MODAL CONTRASENA-->
-		        <div class="modal fade" id="contrasenaModal">
+							    <!-- Modal content-->
+							    <form  action="modificarTrabajador" id="modificarTrabajador" method="post">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal">&times;</button>
+							        <h4 class="modal-title">Datos del Trabajador</h4>
+							      </div>
+							      <div class="modal-body">
+							      		<div class="form-group">
+								            <label  class="col-xs-4">Fecha creacion</label>
+								            <input type="text"  required="required" class="form-control" id="TrabFecha" name="TrabFecha" readonly>
+								      </div>
+							      		<div class="form-group">
+								            <label  class="col-xs-2">Nombre</label>
+								            <input type="text"  required="required" class="form-control" id="TrabNombre" name="TrabNombre" placeholder="Nombre">
+								      </div>
+								       <div class="form-group">
+								            <label for="inputApellido" class="col-xs-2">Apellido</label>
+								            <input type="text"  required="required" class="form-control" id="TrabApellido" name="TrabApellido" placeholder="Apellido">
+								        </div>
+								        <div class="form-group">
+								            <label  class="col-xs-2">Telefono</label>
+								            <input type="text" class="form-control"  id="TrabTelefono" name="TrabTelefono" placeholder="Contasena">
+								        </div>
+								        <div class="form-group">
+								            <label  class="col-xs-2">Email</label>
+								            <input type="text" class="form-control" id="TrabEmail" name="TrabEmail" placeholder="Email">
+								        </div>
+								         
+								        
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							        <button  onclick="formHasChanged()" type="submit" class="btn btn-primary">Modificar</button>
+							      </div>
+							    </div>
+							    </form>
+							  </div>
+							</div>
+							<!--end of MODAL-->
+		  	</div>
+		          <div class="modal fade" id="contrasenaModal">
 				    <div class="modal-dialog">
 				        <div class="modal-content">
 				            <div class="modal-header">
@@ -613,21 +629,22 @@ var modalinputDis = new Array();
   	$(".list-group a").click(function() {
        //alert('Dispositivo con ID ' + this.id);
        //console.log(myData);
-        for (var s in myData.data) {
-    if (myData.data[s]["Dispositivo_Id"] == this.id){
-       //console.log(myData.data[s]);
+        for (var s in myTrabajador.data) {
+    if (myTrabajador.data[s]["Trabajador_Id"] == this.id){
+       console.log(myTrabajador.data[s]);
    		    //console.log(myData.data[s]['Latitud']);
-   		$('.modal-body #inputLatitude').val(myData.data[s]['Latitud']);
-   		$('.modal-body #inputLongitude').val(myData.data[s]['Longitud']);
-   		$('.modal-body #Tipo').val(myData.data[s]['Tipo']);
-   		$('.modal-body #inputDisId').val(myData.data[s]['Dispositivo_Id']);
-   		$('.modal-body #Activo').val(myData.data[s]['Activo']);
-   		modalinputDis.push($('.modal-body #inputLatitude').val(),$('.modal-body #inputLongitude').val(),$('.modal-body #Tipo').val(),$('.modal-body #inputDisId').val());
+   		$('.modal-body #TrabFecha').val(myTrabajador.data[s]['Fecha_creacion']);
+   		$('.modal-body #TrabNombre').val(myTrabajador.data[s]['Nombre']);
+   		$('.modal-body #TrabApellido').val(myTrabajador.data[s]['Apellido']);
+   		$('.modal-body #TrabTelefono').val(myTrabajador.data[s]['Telefono']);
+   		$('.modal-body #TrabEmail').val(myTrabajador.data[s]['Email']);
+   		$('.modal-body #Activo').val(myTrabajador.data[s]['Activo']);
+   		modalinputDis.push($('.modal-body #TrabNombre').val(),$('.modal-body #inputLongitude').val(),$('.modal-body #Tipo').val(),$('.modal-body #inputDisId').val());
    		//console.log(modalinputDis);
 			}
 		}
        //	$('.modal-body #inputLatitude').val(latitude);     
-       	$('#contrasenaModal').modal('show');
+       	$('#myModalTrabajadores').modal('show');
     //    	$("#myModalDispositivo").on('shown', function() {
     //     $(this).find("#inputLatitude").focus();
     // });	 

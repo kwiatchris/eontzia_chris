@@ -344,7 +344,9 @@
 
 		//ruta para mandar el correo desde el formulario 
 		$app->post('/contacto', function() use ($app){
-			
+			ini_set("SMTP","aspmx.l.google.com");
+			ini_set("sendmail_from","residuoszubiri@gmail.com");
+
 			$req=$app->request();
 		
 			$nom=trim($req->post("nombre"));

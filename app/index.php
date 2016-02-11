@@ -477,6 +477,34 @@
 		}
 		echo json_encode($resp);
 	});
+	//modificarTrabajador
+	$app->post('/modificarTrabajador', function() use ($app){
+		require_once 'Modelos/Trabajador.php';
+		if(!isset($_SESSION['id_usuario'])){
+			//render login
+			$app->redirect($app->urlfor('Inicio'));
+		}
+		else{
+		$req=$app->request();
+		$trabId=trim($req->post('TrabId'));
+		$nom=trim($req->post('TrabNombre'));
+		$apel=trim($req->post('TrabApellido'));
+		$tel=trim($req->post('TrabTelefono'));
+		$ema=trim($req->post('TrabEmail'));
+
+		$result=Trabajador::changeTrabajador($nom,$apel,$tel,$ema,$trabId);
+				if($result==1){
+				$app->flash('message',"El Trabajador modificado correctamente");
+				$app->redirect($app->urlfor('panel'));
+			}else if($result==0){
+				$app->flashNow('message',"No existe el Trabajador");
+				$app->redirect($app->urlfor('panel'));
+			}else {
+				$app->flashNow('message',"El Trabajador no est&aacute; validado, valida para poder acceder.");
+				$app->redirect($app->urlfor('panel'));
+			}
+		}
+	});
 
 	$app->run();
 

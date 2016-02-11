@@ -40,7 +40,7 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['nombre']." ".$_SESSION['apellido'] ?><span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="#"><span class="showopacity glyphicon glyphicon-user"></span> Perfil</a></li>
+							<li><a id="linkperfil" href="#linkperfil"><span class="showopacity glyphicon glyphicon-user"></span> Perfil</a></li>
 							<li><a href="logout"><span class="showopacity glyphicon glyphicon-off"></span> Cerrar sesi&oacute;n</a></li>                  
 						</ul>
 					</li>     
@@ -206,7 +206,7 @@
 							<div id="myModalTrabajadores" class="modal fade" role="dialog">
 							  <div class="modal-dialog">
 
-							    <!-- Modal content-->
+							    <!-- Modal content modificarTrabajador-->
 							    <form  action="modificarTrabajador" id="modificarTrabajador" method="post">
 							    <div class="modal-content">
 							      <div class="modal-header">
@@ -214,6 +214,10 @@
 							        <h4 class="modal-title">Datos del Trabajador</h4>
 							      </div>
 							      <div class="modal-body">
+							     		 <div class="form-group" >
+								            <label  class="col-xs-2">Trabajador_Id</label>
+								            <input type="text" class="form-control" id="TrabId" name="TrabId" placeholder="Email" readonly>
+								        </div>
 							      		<div class="form-group">
 								            <label  class="col-xs-4">Fecha creacion</label>
 								            <input type="text"  required="required" class="form-control" id="TrabFecha" name="TrabFecha" readonly>
@@ -234,6 +238,7 @@
 								            <label  class="col-xs-2">Email</label>
 								            <input type="text" class="form-control" id="TrabEmail" name="TrabEmail" placeholder="Email">
 								        </div>
+								        
 								         
 								        
 							      </div>
@@ -245,7 +250,7 @@
 							    </form>
 							  </div>
 							</div>
-							<!--end of MODAL-->
+							<!--end of MODAL modificarTrabajador-->
 		  	</div>
 		          <div class="modal fade" id="contrasenaModal">
 				    <div class="modal-dialog">
@@ -272,7 +277,45 @@
 				    <!-- /.modal-dialog -->
 				    </div>
     <!-- /END modal CONTRASENA -->
-		   <!-- Zawartość zakładki 3 -->
+<!-- MODAL PERFIL-->
+
+							<div id="modalperfil" class="modal fade" role="dialog">
+							  <div class="modal-dialog">
+
+							    <!-- Modal content modificarTrabajador-->
+							    <form  action="modalperfil" id="modalperfil" method="post">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal">&times;</button>
+							        <h4 class="modal-title">PERFIL</h4>
+							      </div>
+							      <div class="modal-body">
+							     		 <div class="form-group" >
+								            <label  class="col-xs-2">Trabajador_Id</label>
+								            <input type="text" class="form-control" id="TrabId" name="TrabId" placeholder="Email" readonly>
+								        </div>
+							      		<div class="form-group">
+								            <label  class="col-xs-4">Fecha creacion</label>
+								            <input type="text"  required="required" class="form-control" id="TrabFecha" name="TrabFecha" readonly>
+								      </div>
+							      		<div class="form-group">
+								            <label  class="col-xs-2">Nombre</label>
+								            <input type="text"  required="required" class="form-control" id="TrabNombre" name="TrabNombre" placeholder="Nombre">
+								      </div>         
+								        
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							        <button  onclick="formHasChanged()" type="submit" class="btn btn-primary">Modificar</button>
+							      </div>
+							    </div>
+							    </form>
+							  </div>
+							</div>
+							<!--end of MODAL PERFIL-->
+
+-->
+	<!-- Zawartość zakładki 3 -->
 		  <div class="tab-pane" id="3zakladka">
 		  
 		  		  <form  action="modyficarDispositivos"  method="post" id="modyficarDispositivos" >
@@ -514,7 +557,9 @@
 </script>
 <script type="text/javascript">
 var modalinputDis = new Array();
-
+$('#linkperfil').click(function(){
+	$('#modalperfil').modal('show');
+});
  $("#buscarCoordenadas").click( function()
            {
              alert("Problem obteniendo coordenadas. Hay que añadirlas manualmente");
@@ -638,8 +683,8 @@ var modalinputDis = new Array();
    		$('.modal-body #TrabApellido').val(myTrabajador.data[s]['Apellido']);
    		$('.modal-body #TrabTelefono').val(myTrabajador.data[s]['Telefono']);
    		$('.modal-body #TrabEmail').val(myTrabajador.data[s]['Email']);
-   		$('.modal-body #Activo').val(myTrabajador.data[s]['Activo']);
-   		modalinputDis.push($('.modal-body #TrabNombre').val(),$('.modal-body #inputLongitude').val(),$('.modal-body #Tipo').val(),$('.modal-body #inputDisId').val());
+   		$('.modal-body #TrabId').val(myTrabajador.data[s]['Trabajador_Id']);
+   		//modalinputTrab.push($('.modal-body #TrabNombre').val(),$('.modal-body #inputLongitude').val(),$('.modal-body #Tipo').val(),$('.modal-body #inputDisId').val());
    		//console.log(modalinputDis);
 			}
 		}

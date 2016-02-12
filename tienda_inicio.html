@@ -155,10 +155,10 @@
 
  var reglas = {  
   nombre_empresa: {required:true,minlength:2},
-   nombre: {required:true,minlength:3},  
-   apellido:{required:true,minlength:3},
+   nombre: {required:true,minlength:3,lettersonly: true},  
+   apellido:{required:true,minlength:3,lettersonly: true},
    correo:{required: true, email:true}, 
-  telefono:{required:true,intlphone:true},
+  telefono:{required:true,intlphone:true,minlength:9},
 
    
   };  
@@ -167,10 +167,13 @@
    nombre: {required:"Nombre Requerido",minlength:"El nombre demasiado corto"}, 
    apellido:{required:"Nombre required",minlength:"El apellido demasiado corto"}, 
    correo:{required:"Email Requerido", email:"Formato de Email incorrecto"},  
-   telefono:{required:"falta numero"},
+   telefono:{required:"falta numero",minlength:"El nombre demasiado corto"},
   
   };  
-   jQuery.validator.addMethod('intlphone', function(value) { return (value.match(/^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12}){1,2}(\s*(ext|x)\s*\.?:?\s*([0-9]+))?$/)); }, 'Please enter a valid phone number');
+   jQuery.validator.addMethod('intlphone', function(value) { return (value.match(/^((\+)?[1-9]{1,2})?([-\s\.])?((\(\d{1,4}\))|\d{1,4})(([-\s\.])?[0-9]{1,12}){1,2}(\s*(ext|x)\s*\.?:?\s*([0-9]+))?$/)); }, 'Por favor, introduce numero valido');
+   jQuery.validator.addMethod("lettersonly", function(value, element) {
+  return this.optional(element) || /^[a-z]+$/i.test(value);
+}, "Por favor, introduce solo las letras"); 
 
     $(document).ready (  
   function(){  
